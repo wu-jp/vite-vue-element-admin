@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <!--  <div class="app-container">
     <div class="sidebar-container">
       <Sidebar />
     </div>
@@ -7,15 +7,32 @@
     <div class="main-container">
       <div class="navbar">navbar</div>
       <div class="app-main">
-        <PageContent />
+
       </div>
     </div>
-  </div>
+  </div>-->
+  <el-container class="layout-container">
+    <el-aside width="200px">
+      <Sidebar />
+    </el-aside>
+    <el-container class="content-wrapper">
+      <Header />
+
+      <el-main>
+        <PageContent />
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script setup>
   import PageContent from './page/index.vue';
   import Sidebar from '@/layouts/components/Sidebar.vue';
+  import Header from './components/header.vue';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+  console.log('router-手动注册的路由', router.options.routes);
 </script>
 
 <style scoped lang="scss">
@@ -46,5 +63,16 @@
         background: #fff;
       }
     }
+  }
+
+  // new
+  .layout-container {
+    width: 100%;
+    height: 100%;
+  }
+  .content-wrapper {
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
   }
 </style>
