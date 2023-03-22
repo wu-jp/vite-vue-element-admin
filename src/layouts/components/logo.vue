@@ -2,10 +2,6 @@
   <div>logo</div>
 </template>
 
-<script>
-  export default {
-    name: 'logo',
-  };
-</script>
+<script setup></script>
 
 <style scoped></style>

@@ -1,13 +1,13 @@
 import { unref } from 'vue';
-import { isObject } from '/@/utils/is';
+import { isObject } from '@/utils/is';
 
-export const noop = () => { };
+export const noop = () => {};
 
 /**
  * @description:  Set ui mount node
  */
 export function getPopupContainer(node) {
-  return (node?.parentNode) ?? document.body;
+  return node?.parentNode ?? document.body;
 }
 
 /**
@@ -37,10 +37,7 @@ export function deepMerge(src = {}, target = {}) {
   return src;
 }
 
-export function openWindow(
-  url,
-  opt,
-) {
+export function openWindow(url, opt) {
   const { target = '__blank', noopener = true, noreferrer = true } = opt || {};
   const feature = [];
 
@@ -55,7 +52,7 @@ export function getDynamicProps(props) {
   const ret = {};
 
   Object.keys(props).map((key) => {
-    ret[key] = unref((props)[key]);
+    ret[key] = unref(props[key]);
   });
 
   return ret;
@@ -66,13 +63,13 @@ export function getRawRoute(route) {
   const { matched, ...opt } = route;
   return {
     ...opt,
-    matched: (matched
+    matched: matched
       ? matched.map((item) => ({
-        meta: item.meta,
-        name: item.name,
-        path: item.path,
-      }))
-      : undefined),
+          meta: item.meta,
+          name: item.name,
+          path: item.path,
+        }))
+      : undefined,
   };
 }
 

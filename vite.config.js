@@ -18,10 +18,15 @@ export default defineConfig({
       port: 8080,
     },
     proxy: {
-      '/api': {
-        target: 'my https address',
+      '/admin': {
+        target: 'http://yy.test.youyi800.com/admin',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/admin/, ''),
+      },
+      '/common': {
+        target: 'http://yy.test.youyi800.com/common',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/common/, ''),
       },
     },
   },

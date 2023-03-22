@@ -1,13 +1,58 @@
 <template>
-  <div>
-    <h1>login</h1>
+  <div class="login-wrapper">
+    <el-form :model="loginForm" :rules="rules" ref="loginFormRef" label-width="100px">
+      <el-form-item label="账号：" prop="username">
+        <el-input v-model="loginForm.username"></el-input>
+      </el-form-item>
+      <el-form-item label="密码：" prop="password">
+        <el-input type="password" v-model="loginForm.password"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="submitForm(loginFormRef)"> 忘记密码 </el-button>
+        <el-button type="primary" @click="submitLogin(loginFormRef)">登录</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
-<script>
-  export default {
-    name: 'login',
+<script setup>
+  import { reactive, ref } from 'vue';
+  import { login } from '@/api/base';
+
+  const loginFormRef = ref(null);
+  const loginForm = reactive({
+    username: '',
+    password: '',
+  });
+  const rules = reactive({
+    username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+    password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  });
+
+  const submitLogin = async (formEl) => {
+    if (!formEl) return;
+    await formEl.validate((valid, fields) => {
+      if (valid) {
+        console.log('登录');
+        login(loginForm).then((res) => {
+          console.log('登录接口', res);
+        });
+      } else {
+        console.log('error submit!', fields);
+      }
+    });
   };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .login-wrapper {
+    /*background: rebeccapurple;*/
+    width: 300px;
+    padding: 20px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+  }
+</style>
