@@ -83,3 +83,47 @@ export const withInstall = (component, alias) => {
   };
   return component;
 };
+
+// 生成首页路由
+export const generateIndexRouter = (data) => {
+  const indexRouter = [...generateChildRouters(data)];
+  return indexRouter;
+};
+
+// 生成嵌套路由（子路由）
+const generateChildRouters = (data) => {
+  const routers = [];
+  for (const item of data) {
+    let component = '';
+    if (item.level === 1) {
+      component = 'layout/index';
+    } else if (item._child && item.level === 2) {
+      component = 'layout/pageView/Index';
+    } else {
+      component = 'views/' + item.component;
+    }
+    const menu = {
+      path: item.router,
+      hidden: item.hidden ? item.hidden : false,
+      redirect: item.redirect ? item.redirect : '',
+      component: (resolve) => require(['@/' + component + '.vue'], resolve),
+      meta: {
+        title: item.title,
+        icon: item.icon,
+      },
+    };
+    if (item._child && item._child.length > 0) {
+      menu.children = [...generateChildRouters(item._child)];
+    }
+    // --update-begin----author:scott---date:20190320------for:根据后台菜单配置，判断是否路由菜单字段，动态选择是否生成路由（为了支持参数URL菜单）------
+    // 判断是否生成路由
+    if (item.route && item.route === '0') {
+      console.log(' 不生成路由 item.route：  ' + item.route);
+      console.log(' 不生成路由 item.path：  ' + item.path);
+    } else {
+      routers.push(menu);
+    }
+    // --update-end----author:scott---date:20190320------for:根据后台菜单配置，判断是否路由菜单字段，动态选择是否生成路由（为了支持参数URL菜单）------
+  }
+  return routers;
+};

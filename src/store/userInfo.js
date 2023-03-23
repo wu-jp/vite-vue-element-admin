@@ -1,13 +1,16 @@
 import { defineStore } from 'pinia';
+import { login } from '@/api/base';
+import { useMemberCenter } from '@/store/memberCenter';
+import { generateIndexRouter } from '@/utils';
 
 export const useUserInfo = defineStore('userInfo', {
   state: () => {
     return {
       id: 0,
       username: '',
-      nickname: '',
       token: '',
       refreshToken: '',
+      userInfo: '',
     };
   },
   getters: {},
@@ -24,6 +27,25 @@ export const useUserInfo = defineStore('userInfo', {
     },
     isLogin() {
       return this.id && this.token;
+    },
+    async login(params) {
+      try {
+        const { code, data, msg } = await login(params);
+        if (code === 0) {
+          this.token = data.token;
+          this.refreshToken = data.token;
+          this.id = data.id;
+          this.username = data.username;
+          this.userInfo = data;
+
+          const memberCenter = useMemberCenter();
+          const constRoutes = generateIndexRouter(data.menu);
+          memberCenter.setViewRoutes(constRoutes);
+          return true;
+        }
+      } catch (error) {
+        return Promise.reject(error);
+      }
     },
     logout() {
       // TODO 调用接口

@@ -18,11 +18,15 @@
 <script setup>
   import { reactive, ref } from 'vue';
   import { login } from '@/api/base';
+  import { ElMessage } from 'element-plus';
+  import { useUserInfo } from '@/store/userInfo';
+  import { useRouter } from 'vue-router';
+  const router = useRouter();
 
   const loginFormRef = ref(null);
   const loginForm = reactive({
-    username: '',
-    password: '',
+    username: 'admin',
+    password: '123456',
   });
   const rules = reactive({
     username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
@@ -33,10 +37,22 @@
     if (!formEl) return;
     await formEl.validate((valid, fields) => {
       if (valid) {
-        console.log('登录');
-        login(loginForm).then((res) => {
-          console.log('登录接口', res);
-        });
+        const userStore = useUserInfo();
+        userStore
+          .login(loginForm)
+          .then(() => {
+            ElMessage({
+              message: '登录成功',
+              type: 'success',
+            });
+            router.push('/');
+          })
+          .catch(() => {
+            ElMessage({
+              message: '登录失败',
+              type: 'error',
+            });
+          });
       } else {
         console.log('error submit!', fields);
       }
