@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <Logo />
+  <Logo />
+  <el-scrollbar class="menus-scrollbar">
     <Menus />
-  </div>
+  </el-scrollbar>
 </template>
 
 <script setup>
@@ -10,4 +10,9 @@
   import Menus from './menus/index.vue';
 </script>
 
-<style scoped></style>
+<style scoped>
+  .menus-scrollbar {
+    height: calc(100vh - 50px);
+    background-color: #fff;
+  }
+</style>

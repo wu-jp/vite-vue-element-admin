@@ -1,60 +1,86 @@
 <template>
   <el-menu
-    active-text-color="#ffd04b"
-    background-color="#545c64"
+    active-text-color="#409eff"
+    background-color="#fff"
     class="el-menu-vertical-demo"
     default-active="2"
-    text-color="#fff"
+    text-color="#333"
+    :collapse="isCollapse"
     @open="handleOpen"
     @close="handleClose"
-    style="height: 100vh"
   >
-    <!--    <el-sub-menu index="1">
-      <template #title>
-        <el-icon><location /></el-icon>
-        <span>Navigator One</span>
-      </template>
-      <el-menu-item-group title="Group One">
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
-      </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title>item four</template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-      </el-sub-menu>
-    </el-sub-menu>
-    <el-menu-item index="2">
-      <el-icon><icon-menu /></el-icon>
-      <span>Navigator Two</span>
-    </el-menu-item>
-    <el-menu-item index="3" disabled>
-      <el-icon><document /></el-icon>
-      <span>Navigator Three</span>
-    </el-menu-item>
-    <el-menu-item index="4">
-      <el-icon><setting /></el-icon>
-      <span>Navigator Four</span>
-    </el-menu-item>-->
-
-    <MenuTree :menus="menus" />
+    <MenuTree :menus="menu" />
   </el-menu>
 </template>
-
+<!--#B4D5FF-->
 <script setup>
   import MenuTree from './menuTree.vue';
-  import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue';
-  import menus from '@/assets/menus.json';
+  import menuData from '@/assets/menus.json';
+  import { ref } from 'vue';
+  import { useMemberCenter } from '@/store/memberCenter';
 
-  console.log('menus', menus);
+  const isCollapse = ref(false);
+
+  const menu = ref([]);
+
   const handleOpen = (key, keyPath) => {
     console.log(key, keyPath);
   };
   const handleClose = (key, keyPath) => {
     console.log(key, keyPath);
   };
+
+  const handleMenuRule = (routes, pathPrefix = '/', parent = '/') => {
+    const menuRule = []; //这是菜单
+    const authNode = []; //这是按钮
+
+    for (const key in routes) {
+      if (routes[key].type === 'menu' || routes[key].type === 'menu_dir') {
+        if (
+          routes[key].type === 'menu_dir' &&
+          routes[key].children &&
+          !routes[key].children.length
+        ) {
+          continue;
+        }
+        const currentPath = pathPrefix + routes[key].path;
+
+        let children = [];
+
+        if (routes[key].children && routes[key].children.length > 0) {
+          children = handleMenuRule(routes[key].children, pathPrefix, currentPath);
+        }
+
+        menuRule.push({
+          path: currentPath,
+          name: routes[key].name,
+          component: routes[key].component,
+          mate: {
+            title: routes[key].title,
+            icon: routes[key].icon,
+            keepalive: routes[key].keepalive,
+            type: routes[key].menu_type,
+          },
+          children,
+        });
+      } else {
+        authNode.push(pathPrefix + routes[key].name);
+      }
+    }
+
+    if (authNode.length) {
+      const memberCenter = useMemberCenter();
+      memberCenter.setAuthNode(parent, authNode);
+    }
+    console.log(parent);
+    return menuRule;
+  };
+
+  menu.value = handleMenuRule(menuData);
 </script>
 
-<style scoped></style>
+<style scoped>
+  .el-menu-vertical-demo {
+    border: 0;
+  }
+</style>

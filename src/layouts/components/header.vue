@@ -1,5 +1,5 @@
 <template>
-  <el-header>
+  <el-header class="header-container">
     <div>header</div>
     <Navbar />
   </el-header>
@@ -12,4 +12,9 @@
   };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .header-container {
+    background: aquamarine;
+    height: 50px;
+  }
+</style>
