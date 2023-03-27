@@ -1,13 +1,15 @@
 <template>
   <Logo />
   <el-scrollbar class="menus-scrollbar">
-    <Menus />
+    <Menus :isCollapse="asideType" />
   </el-scrollbar>
 </template>
 
 <script setup>
   import Logo from './logo.vue';
   import Menus from './menus/index.vue';
+
+  const props = defineProps(['asideType']);
 </script>
 
 <style scoped>

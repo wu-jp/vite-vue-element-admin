@@ -1,20 +1,22 @@
 <template>
   <el-header class="header-container">
-    <div>header</div>
+    <el-icon v-if="!asideType" :size="20" color="#409EFF" @click="$emit('changeAsideWidth', true)"
+      ><Expand
+    /></el-icon>
+    <el-icon v-else :size="20" color="#409EFF" @click="$emit('changeAsideWidth', false)"
+      ><Fold
+    /></el-icon>
     <Navbar />
   </el-header>
 </template>
 
-<script>
-  import Navbar from './navBar/index.vue';
-  export default {
-    name: 'header',
-  };
+<script setup>
+  const emit = defineEmits(['changeAsideWidth']);
+  const props = defineProps(['asideType']);
 </script>
 
 <style scoped>
   .header-container {
-    background: aquamarine;
     height: 50px;
   }
 </style>

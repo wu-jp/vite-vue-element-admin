@@ -5,7 +5,7 @@
     class="el-menu-vertical-demo"
     default-active="2"
     text-color="#333"
-    :collapse="isCollapse"
+    :collapse="!isCollapse"
     @open="handleOpen"
     @close="handleClose"
   >
@@ -16,10 +16,17 @@
 <script setup>
   import MenuTree from './menuTree.vue';
   import menuData from '@/assets/menus.json';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { useMemberCenter } from '@/store/memberCenter';
 
-  const isCollapse = ref(false);
+  const props = defineProps(['isCollapse']);
+
+  watch(
+    () => props.isCollapse,
+    (value) => {
+      console.log('watch', value);
+    },
+  );
 
   const menu = ref([]);
 

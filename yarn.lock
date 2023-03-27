@@ -17,6 +17,11 @@
   "resolved" "https://registry.npmjs.org/@element-plus/icons-vue/-/icons-vue-1.1.4.tgz"
   "version" "1.1.4"
 
+"@element-plus/icons-vue@^2.1.0":
+  "integrity" "sha512-PSBn3elNoanENc1vnCfh+3WA9fimRC7n+fWkf3rE5jvv+aBohNHABC/KAR5KWPecxWxDTVT1ERpRbOMRcOV/vA=="
+  "resolved" "https://registry.npmjs.org/@element-plus/icons-vue/-/icons-vue-2.1.0.tgz"
+  "version" "2.1.0"
+
 "@eslint-community/eslint-utils@^4.2.0":
   "integrity" "sha512-v3oplH6FYCULtFuCeqyuTd9D2WKO937Dxdq+GmHOLL72TTRriLxz2VLlNfkZRsvj6PKnOPAtuT6dwrs/pA5DvA=="
   "resolved" "https://registry.npmjs.org/@eslint-community/eslint-utils/-/eslint-utils-4.3.0.tgz"
