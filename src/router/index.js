@@ -14,26 +14,44 @@ const routes = [
     children: [
       {
         path: 'auth',
-        // component: () => import('@/views/auth/index.vue'),
+        name: 'auth',
+        mate: {
+          title: '权限管理',
+          icon: '',
+          type: '',
+        },
         component: pageView,
-        // redirect: '/system/auth/group',
         children: [
           {
             path: 'group',
+            mate: {
+              title: '角色管理',
+              icon: '',
+              type: 'tab',
+            },
             component: () => import('@/views/auth/group.vue'),
           },
           {
+            path: 'menu',
+            mate: {
+              title: '菜单管理',
+              icon: '',
+              type: 'tab',
+            },
+            component: () => import('@/views/auth/menu.vue'),
+          },
+          {
             path: 'admin',
+            mate: {
+              title: '管理员管理',
+              icon: '',
+              type: 'tab',
+            },
             component: () => import('@/views/auth/admin.vue'),
           },
         ],
       },
     ],
-  },
-
-  {
-    path: '/about',
-    component: () => import('../views/About.vue'),
   },
   {
     path: '/404',

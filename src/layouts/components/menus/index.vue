@@ -84,6 +84,8 @@
   };
 
   menu.value = handleMenuRule(menuData);
+
+  console.log('这里是从json文件拿的菜单 💥💥💥', menu.value);
 </script>
 
 <style scoped>

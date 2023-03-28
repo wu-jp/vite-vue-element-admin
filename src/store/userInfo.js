@@ -40,6 +40,7 @@ export const useUserInfo = defineStore('userInfo', {
 
           const memberCenter = useMemberCenter();
           const constRoutes = generateIndexRouter(data.menu);
+          console.log('constRoutes', constRoutes);
           memberCenter.setViewRoutes(constRoutes);
           return true;
         }

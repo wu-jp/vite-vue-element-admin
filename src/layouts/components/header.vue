@@ -11,12 +11,18 @@
 </template>
 
 <script setup>
+  import Navbar from './navBar/index.vue';
   const emit = defineEmits(['changeAsideWidth']);
   const props = defineProps(['asideType']);
 </script>
 
 <style scoped>
   .header-container {
+    background-color: #fff;
+    width: 100%;
     height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 </style>
