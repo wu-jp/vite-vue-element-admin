@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import Layout from '@/layouts/index.vue';
 import pageView from '@/layouts/page/index.vue';
 import { useUserInfo } from '@/store/userInfo';
+import { generateIndexRouter } from '@/utils';
+import { useMemberCenter } from '@/store/memberCenter';
 
 const routes = [
   {
@@ -76,16 +78,17 @@ router.beforeEach((to, from, next) => {
 
   // 3. 获取token
   const userInfo = useUserInfo();
-  let isLogin = userInfo.isLogin();
-  console.log('isLogin', isLogin);
 
   // 4. 判断是否缓存路由
-  if (true) {
+  if (userInfo.userInfo) {
     // 从登录的缓存中获取动态路由
+    const routes = generateIndexRouter(userInfo.userInfo.menu);
+    const memberCenter = useMemberCenter();
+    memberCenter.setViewRoutes(routes);
   }
 
   // 5. 判断token
-
+  let isLogin = userInfo.isLogin();
   if (isLogin) {
     if (to.path === '/login') {
       next({ path: '/' });

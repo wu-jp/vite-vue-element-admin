@@ -10,14 +10,17 @@ export const useMemberCenter = defineStore('memberCenter', () => {
     authNode: new Map(),
   });
 
+  // 按钮权限
   const setAuthNode = (key, data) => {
     state.authNode.set(key, data);
   };
 
+  // 路由菜单
   const setViewRoutes = (data) => {
     state.viewRoutes = data;
   };
 
+  // 当前路由
   const setActiveRoute = (route) => {
     state.activeRoute = route;
   };

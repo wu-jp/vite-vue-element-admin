@@ -86,8 +86,20 @@ export const withInstall = (component, alias) => {
 
 // 生成首页路由
 export const generateIndexRouter = (data) => {
+  data = routerSort(data);
   const indexRouter = [...generateChildRouters(data)];
   return indexRouter;
+};
+
+// 对路由进行排序
+const routerSort = (arr) => {
+  arr.sort((a, b) => a.sort - b.sort);
+  arr.forEach((item) => {
+    if (item._child && item._child.length) {
+      item._child.sort((a, b) => a.sort - b.sort);
+    }
+  });
+  return arr;
 };
 
 // 生成嵌套路由（子路由）

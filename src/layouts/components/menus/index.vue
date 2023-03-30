@@ -62,7 +62,7 @@
           path: currentPath,
           name: routes[key].name,
           component: routes[key].component,
-          mate: {
+          meta: {
             title: routes[key].title,
             icon: routes[key].icon,
             keepalive: routes[key].keepalive,
@@ -83,9 +83,14 @@
     return menuRule;
   };
 
-  menu.value = handleMenuRule(menuData);
+  // 这里是从json文件拿的菜单
+  // menu.value = handleMenuRule(menuData);
 
-  console.log('这里是从json文件拿的菜单 💥💥💥', menu.value);
+  // 这里是从接口里取的路由
+  const memberCenter = useMemberCenter();
+  menu.value = memberCenter.state.viewRoutes;
+
+  console.log('💥💥💥', menu.value);
 </script>
 
 <style scoped>

@@ -52,4 +52,7 @@ export const useUserInfo = defineStore('userInfo', {
       // TODO 调用接口
     },
   },
+  persist: {
+    key: 'userInfo',
+  },
 });
