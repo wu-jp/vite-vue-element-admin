@@ -5,7 +5,7 @@ import { useUserInfo } from '@/store/userInfo';
 import { generateIndexRouter } from '@/utils';
 import { useMemberCenter } from '@/store/memberCenter';
 
-const routes = [
+export const constantRoutes = [
   {
     path: '/',
     component: Layout,
@@ -68,7 +68,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: constantRoutes,
 });
 
 router.beforeEach((to, from, next) => {
@@ -79,13 +79,23 @@ router.beforeEach((to, from, next) => {
   // 3. 获取token
   const userInfo = useUserInfo();
 
+  const memberCenter = useMemberCenter();
+
   // 4. 判断是否缓存路由
-  if (userInfo.userInfo) {
+  if (memberCenter.state.viewRoutes.length === 0) {
     // 从登录的缓存中获取动态路由
     const routes = generateIndexRouter(userInfo.userInfo.menu);
-    const memberCenter = useMemberCenter();
+
+    routes.forEach((item) => {
+      router.addRoute(item);
+    });
+
     memberCenter.setViewRoutes(routes);
+
+    next({ ...to, replace: true });
   }
+
+  console.log('⬇️', router.getRoutes());
 
   // 5. 判断token
   let isLogin = userInfo.isLogin();

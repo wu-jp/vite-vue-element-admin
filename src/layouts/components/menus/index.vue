@@ -88,7 +88,7 @@
 
   // 这里是从接口里取的路由
   const memberCenter = useMemberCenter();
-  menu.value = memberCenter.state.viewRoutes;
+  menu.value = memberCenter.state.routes;
 
   console.log('💥💥💥', menu.value);
 </script>
