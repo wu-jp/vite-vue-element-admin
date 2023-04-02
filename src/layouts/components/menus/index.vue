@@ -20,14 +20,6 @@
   import { useMemberCenter } from '@/store/memberCenter';
 
   const props = defineProps(['isCollapse']);
-
-  watch(
-    () => props.isCollapse,
-    (value) => {
-      console.log('watch', value);
-    },
-  );
-
   const menu = ref([]);
 
   const handleOpen = (key, keyPath) => {

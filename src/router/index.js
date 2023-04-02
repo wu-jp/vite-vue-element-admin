@@ -8,16 +8,32 @@ import { useMemberCenter } from '@/store/memberCenter';
 export const constantRoutes = [
   {
     path: '/',
+    redirect: '/dashboard',
     component: Layout,
+    hidden: true,
+  },
+  {
+    path: '/dashboard',
+    meta: {
+      title: '工作台',
+      icon: '',
+      type: '',
+    },
+    component: () => import('@/views/dashboard.vue'),
   },
   {
     path: '/system',
     component: Layout,
+    meta: {
+      title: '系统',
+      icon: '',
+      type: 'tab',
+    },
     children: [
       {
         path: 'auth',
         name: 'auth',
-        mate: {
+        meta: {
           title: '权限管理',
           icon: '',
           type: '',
@@ -26,7 +42,7 @@ export const constantRoutes = [
         children: [
           {
             path: 'group',
-            mate: {
+            meta: {
               title: '角色管理',
               icon: '',
               type: 'tab',
@@ -35,7 +51,7 @@ export const constantRoutes = [
           },
           {
             path: 'menu',
-            mate: {
+            meta: {
               title: '菜单管理',
               icon: '',
               type: 'tab',
@@ -44,7 +60,7 @@ export const constantRoutes = [
           },
           {
             path: 'admin',
-            mate: {
+            meta: {
               title: '管理员管理',
               icon: '',
               type: 'tab',
@@ -58,11 +74,13 @@ export const constantRoutes = [
   {
     path: '/404',
     component: () => import('../views/404.vue'),
+    hidden: true,
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('../views/login.vue'),
+    hidden: true,
   },
 ];
 
@@ -95,7 +113,7 @@ router.beforeEach((to, from, next) => {
     next({ ...to, replace: true });
   }
 
-  console.log('⬇️', router.getRoutes());
+  // console.log('⬇️', router.getRoutes());
 
   // 5. 判断token
   let isLogin = userInfo.isLogin();
