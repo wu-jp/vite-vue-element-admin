@@ -6,7 +6,11 @@
     <el-container class="content-wrapper">
       <Header :asideType="asideType" @changeAsideWidth="changeAsideWidth" />
       <el-main>
-        <PageContent />
+        <el-scrollbar class="scrollbar-container">
+          <div class="default-main">
+            <PageContent />
+          </div>
+        </el-scrollbar>
       </el-main>
     </el-container>
   </el-container>
@@ -42,10 +46,24 @@
   }
 
   .el-main {
-    padding: 16px;
+    padding: 0;
   }
 
   .layout-aside-default {
     transition: width 0.3s ease;
+  }
+
+  .scrollbar-container {
+    height: calc(100vh - 50px);
+    box-sizing: border-box;
+
+    //padding: 15px;
+    //margin: 15px;
+  }
+
+  .default-main {
+    margin: 16px 16px 50px 16px;
+    background: #fff;
+    border-radius: 4px;
   }
 </style>

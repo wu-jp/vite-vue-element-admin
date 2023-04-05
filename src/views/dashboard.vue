@@ -1,9 +1,7 @@
 <template>
-  <Layout />
+  <div style="height: 200vh; padding-top: 400px">121212</div>
 </template>
 
-<script setup>
-  import Layout from '@/layouts/index.vue';
-</script>
+<script setup></script>
 
 <style scoped></style>

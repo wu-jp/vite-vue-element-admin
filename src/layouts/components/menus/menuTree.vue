@@ -22,11 +22,17 @@
 
 <script setup>
   import { useMemberCenter } from '@/store/memberCenter';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
 
   const props = defineProps(['menus']);
 
   const onClickMenu = (menu) => {
     console.log('menu', menu);
+    if (menu.path) {
+      router.push({ path: menu.path });
+    }
   };
 
   const memberCenter = useMemberCenter();

@@ -1,5 +1,5 @@
 <template>
-  <h1>auth-group</h1>
+  <div>auth-group</div>
 </template>
 
 <script setup></script>

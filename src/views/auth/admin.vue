@@ -1,5 +1,5 @@
 <template>
-  <h1>auth-admin</h1>
+  <div>auth-admin</div>
 </template>
 
 <script setup></script>

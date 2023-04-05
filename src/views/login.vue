@@ -17,10 +17,10 @@
 
 <script setup>
   import { reactive, ref } from 'vue';
-  import { login } from '@/api/base';
   import { ElMessage } from 'element-plus';
   import { useUserInfo } from '@/store/userInfo';
   import { useRouter } from 'vue-router';
+  import { useUser } from '@/store/user';
   const router = useRouter();
 
   const loginFormRef = ref(null);
@@ -35,24 +35,24 @@
 
   const submitLogin = async (formEl) => {
     if (!formEl) return;
-    await formEl.validate((valid, fields) => {
+    await formEl.validate(async (valid, fields) => {
       if (valid) {
-        const userStore = useUserInfo();
-        userStore
-          .login(loginForm)
-          .then(() => {
-            ElMessage({
-              message: '登录成功',
-              type: 'success',
-            });
-            router.push('/');
-          })
-          .catch(() => {
-            ElMessage({
-              message: '登录失败',
-              type: 'error',
-            });
+        try {
+          const user = useUser();
+          const userinfo = await user.login(loginForm);
+          console.log(userinfo);
+          ElMessage({
+            message: '登录成功',
+            type: 'success',
           });
+          await router.push('/');
+        } catch (e) {
+          console.log('e', e);
+          ElMessage({
+            message: '登录失败',
+            type: 'error',
+          });
+        }
       } else {
         console.log('error submit!', fields);
       }

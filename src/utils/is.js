@@ -5,7 +5,7 @@ export function is(val, type) {
 }
 
 export function isDef(val) {
-  return typeof val !== "undefined";
+  return typeof val !== 'undefined';
 }
 
 export function isUnDef(val) {
@@ -13,7 +13,7 @@ export function isUnDef(val) {
 }
 
 export function isObject(val) {
-  return val !== null && is(val, "Object");
+  return val !== null && is(val, 'Object');
 }
 
 export function isEmpty(val) {
@@ -33,7 +33,7 @@ export function isEmpty(val) {
 }
 
 export function isDate(val) {
-  return is(val, "Date");
+  return is(val, 'Date');
 }
 
 export function isNull(val) {
@@ -49,32 +49,27 @@ export function isNullOrUnDef(val) {
 }
 
 export function isNumber(val) {
-  return is(val, "Number");
+  return is(val, 'Number');
 }
 
 export function isPromise(val) {
-  return (
-    is(val, "Promise") &&
-    isObject(val) &&
-    isFunction(val.then) &&
-    isFunction(val.catch)
-  );
+  return is(val, 'Promise') && isObject(val) && isFunction(val.then) && isFunction(val.catch);
 }
 
 export function isString(val) {
-  return is(val, "String");
+  return is(val, 'String');
 }
 
 export function isFunction(val) {
-  return typeof val === "function";
+  return typeof val === 'function';
 }
 
 export function isBoolean(val) {
-  return is(val, "Boolean");
+  return is(val, 'Boolean');
 }
 
 export function isRegExp(val) {
-  return is(val, "RegExp");
+  return is(val, 'RegExp');
 }
 
 export function isArray(val) {
@@ -82,7 +77,7 @@ export function isArray(val) {
 }
 
 export function isWindow(val) {
-  return typeof window !== "undefined" && is(val, "Window");
+  return typeof window !== 'undefined' && is(val, 'Window');
 }
 
 export function isElement(val) {
@@ -90,10 +85,10 @@ export function isElement(val) {
 }
 
 export function isMap(val) {
-  return is(val, "Map");
+  return is(val, 'Map');
 }
 
-export const isServer = typeof window === "undefined";
+export const isServer = typeof window === 'undefined';
 
 export const isClient = !isServer;
 

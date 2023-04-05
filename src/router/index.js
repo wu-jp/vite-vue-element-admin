@@ -4,44 +4,52 @@ import pageView from '@/layouts/page/index.vue';
 import { useUserInfo } from '@/store/userInfo';
 import { generateIndexRouter } from '@/utils';
 import { useMemberCenter } from '@/store/memberCenter';
+import { useUser } from '@/store/user';
+import { usePermissionStore } from '@/store/permission';
 
 export const constantRoutes = [
   {
     path: '/',
     redirect: '/dashboard',
     component: Layout,
-    hidden: true,
-  },
-  {
-    path: '/dashboard',
     meta: {
-      title: '工作台',
+      title: 'Dashboard',
       icon: '',
       type: '',
     },
-    component: () => import('@/views/dashboard.vue'),
+    children: [
+      {
+        path: '/dashboard',
+        component: () => import('@/views/dashboard.vue'),
+        meta: {
+          title: '工作台',
+          icon: '',
+          type: 'tab',
+        },
+      },
+    ],
   },
   {
     path: '/system',
     component: Layout,
     meta: {
-      title: '系统',
+      title: '系统1',
       icon: '',
       type: 'tab',
     },
     children: [
       {
-        path: 'auth',
+        path: '/system/auth',
         name: 'auth',
         meta: {
-          title: '权限管理',
+          title: '权限管理1',
           icon: '',
           type: '',
         },
         component: pageView,
         children: [
           {
-            path: 'group',
+            path: '/system/auth/group',
             meta: {
               title: '角色管理',
               icon: '',
@@ -50,7 +58,7 @@ export const constantRoutes = [
             component: () => import('@/views/auth/group.vue'),
           },
           {
-            path: 'menu',
+            path: '/system/auth/menu',
             meta: {
               title: '菜单管理',
               icon: '',
@@ -59,7 +67,7 @@ export const constantRoutes = [
             component: () => import('@/views/auth/menu.vue'),
           },
           {
-            path: 'admin',
+            path: '/system/auth/admin',
             meta: {
               title: '管理员管理',
               icon: '',
@@ -89,7 +97,7 @@ const router = createRouter({
   routes: constantRoutes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // 1. 进度条
 
   // 2. 设置标题
@@ -100,28 +108,48 @@ router.beforeEach((to, from, next) => {
   const memberCenter = useMemberCenter();
 
   // 4. 判断是否缓存路由
-  if (memberCenter.state.viewRoutes.length === 0) {
-    // 从登录的缓存中获取动态路由
-    const routes = generateIndexRouter(userInfo.userInfo.menu);
-
-    routes.forEach((item) => {
-      router.addRoute(item);
-    });
-
-    memberCenter.setViewRoutes(routes);
-
-    next({ ...to, replace: true });
-  }
 
   // console.log('⬇️', router.getRoutes());
 
   // 5. 判断token
-  let isLogin = userInfo.isLogin();
-  if (isLogin) {
+  // let isLogin = userInfo.isLogin();
+
+  const userStore = useUser();
+  const token = userStore.getToken;
+
+  if (token) {
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
-      next();
+      const permissionStore = usePermissionStore();
+      let routes = permissionStore.getPermCodeList;
+      if (routes.length === 0) {
+        console.log('从个人信息中获取');
+        // 重新添加路由
+        routes = await permissionStore.buildRoutesAction();
+        routes.forEach((item) => {
+          router.addRoute(item);
+        });
+
+        next({ ...to, replace: true });
+      } else {
+        console.log('直接跳转');
+        next();
+      }
+      // if (memberCenter.state.viewRoutes.length === 0) {
+      //   // 从登录的缓存中获取动态路由
+      //   const routes = generateIndexRouter(userInfo.userInfo.menu);
+      //
+      //   routes.forEach((item) => {
+      //     router.addRoute(item);
+      //   });
+      //
+      //   memberCenter.setViewRoutes(routes);
+      //
+      //   next({ ...to, replace: true });
+      // } else {
+      //   next();
+      // }
     }
   } else {
     if (to.path === '/login') {

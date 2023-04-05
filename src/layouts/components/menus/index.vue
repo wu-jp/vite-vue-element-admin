@@ -18,9 +18,14 @@
   import menuData from '@/assets/menus.json';
   import { ref, watch } from 'vue';
   import { useMemberCenter } from '@/store/memberCenter';
+  import { usePermissionStore } from '@/store/permission';
 
   const props = defineProps(['isCollapse']);
+
   const menu = ref([]);
+  const permissionStore = usePermissionStore();
+  menu.value = permissionStore.getMenuList;
+  console.log('💥💥💥', menu.value);
 
   const handleOpen = (key, keyPath) => {
     console.log(key, keyPath);
@@ -79,10 +84,8 @@
   // menu.value = handleMenuRule(menuData);
 
   // 这里是从接口里取的路由
-  const memberCenter = useMemberCenter();
-  menu.value = memberCenter.state.routes;
-
-  console.log('💥💥💥', menu.value);
+  // const memberCenter = useMemberCenter();
+  // menu.value = memberCenter.state.routes;
 </script>
 
 <style scoped>

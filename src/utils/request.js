@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
+import { getToken } from '@/utils/auth';
+import { useUser } from '@/store/user';
 
 const service = axios.create({
   baseURL: '',
@@ -9,6 +11,13 @@ const service = axios.create({
 service.interceptors.request.use(
   (config) => {
     // TODO 添加token
+    const userStore = useUser();
+    const token = userStore.getToken;
+
+    if (token) {
+      config.headers['Auth-TOken'] = token;
+    }
+
     return config;
   },
   (error) => {
