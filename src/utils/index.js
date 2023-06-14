@@ -108,8 +108,8 @@ const generateChildRouters = (data) => {
   for (const item of data) {
     let component = '';
     if (item.level === 1) {
-      component = 'layout/index';
-    } else if (item._child && item.level === 2) {
+      component = 'layout/index.vue';
+    } else if (item._child && item.level !== 2) {
       component = 'layout/pageView/Index';
     } else {
       component = 'views/' + item.component;

@@ -33,7 +33,7 @@ export const constantRoutes = [
     path: '/system',
     component: Layout,
     meta: {
-      title: '系统1',
+      title: '我的系统',
       icon: '',
       type: 'tab',
     },
@@ -42,38 +42,38 @@ export const constantRoutes = [
         path: '/system/auth',
         name: 'auth',
         meta: {
-          title: '权限管理1',
+          title: '权限管理',
           icon: '',
           type: '',
         },
         component: pageView,
         children: [
           {
-            path: '/system/auth/group',
+            path: '/system/auth/admin',
             meta: {
-              title: '角色管理',
+              title: '用户列表',
               icon: '',
               type: 'tab',
             },
-            component: () => import('@/views/auth/group.vue'),
+            component: () => import('@/views/auth/admin/index.vue'),
           },
           {
             path: '/system/auth/menu',
             meta: {
-              title: '菜单管理',
+              title: '菜单列表',
               icon: '',
               type: 'tab',
             },
-            component: () => import('@/views/auth/menu.vue'),
+            component: () => import('@/views/auth/menu/index.vue'),
           },
           {
-            path: '/system/auth/admin',
+            path: '/system/auth/role',
             meta: {
-              title: '管理员管理',
+              title: '角色列表',
               icon: '',
               type: 'tab',
             },
-            component: () => import('@/views/auth/admin.vue'),
+            component: () => import('@/views/auth/role/index.vue'),
           },
         ],
       },
@@ -127,10 +127,11 @@ router.beforeEach(async (to, from, next) => {
         console.log('从个人信息中获取');
         // 重新添加路由
         routes = await permissionStore.buildRoutesAction();
+        console.log(routes, '1111111111');
         routes.forEach((item) => {
+          console.log('item', item);
           router.addRoute(item);
         });
-
         next({ ...to, replace: true });
       } else {
         console.log('直接跳转');

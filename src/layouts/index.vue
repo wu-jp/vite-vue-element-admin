@@ -62,8 +62,10 @@
   }
 
   .default-main {
-    margin: 16px 16px 50px 16px;
+    margin: 10px 10px 40px 10px;
     background: #fff;
     border-radius: 4px;
+    box-sizing: border-box;
+    padding: 10px;
   }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dropdown ref="dropdown" trigger="contextmenu">
-      <el-avatar :size="45" :src="circleUrl" @click="showClick" />
+      <el-avatar :size="40" :src="circleUrl" @click="showClick" />
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item>首页</el-dropdown-item>

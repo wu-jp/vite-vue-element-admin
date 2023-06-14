@@ -19,12 +19,12 @@ export default defineConfig({
     },
     proxy: {
       '/admin': {
-        target: 'http://yy.test.youyi800.com/admin',
+        target: 'https://yy-test.youyi800.com/admin',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/admin/, ''),
       },
       '/common': {
-        target: 'http://yy.test.youyi800.com/common',
+        target: 'https://yy-test.youyi800.com/common',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/common/, ''),
       },
