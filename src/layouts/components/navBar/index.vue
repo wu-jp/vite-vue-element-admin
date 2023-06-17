@@ -15,15 +15,30 @@
 <script setup>
   import circleUrl from '@/assets/avatar.png';
   import { ref } from 'vue';
+  import { useUser } from '@/store/user';
+  import { ElMessage } from 'element-plus';
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter();
+
   const dropdown = ref(null);
 
+  const userStore = useUser();
+
   const showClick = () => {
-    console.log(1);
     dropdown.value.handleOpen();
   };
 
   const logout = () => {
     console.log('退出登录');
+    userStore.logout().then(() => {
+      ElMessage({
+        message: '退出成功',
+        type: 'success',
+        duration: 1500,
+      });
+      router.push('/login');
+    });
   };
 </script>
 

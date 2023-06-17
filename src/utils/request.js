@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import { getToken } from '@/utils/auth';
 import { useUser } from '@/store/user';
+import router from '@/router/index';
 
 const service = axios.create({
   baseURL: '',
@@ -15,7 +16,7 @@ service.interceptors.request.use(
     const token = userStore.getToken;
 
     if (token) {
-      config.headers['Auth-TOken'] = token;
+      config.headers['Auth-Token'] = token;
     }
 
     return config;
@@ -30,6 +31,11 @@ service.interceptors.response.use(
     const res = response.data;
 
     if (res.code !== 0) {
+      if (res.code === 502 || res.code === 501 || res.code === 505) {
+        const userStore = useUser();
+        userStore.afterLogout();
+        router.push('/login');
+      }
       ElMessage({
         message: res.msg || 'Error',
         type: 'error',

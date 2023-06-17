@@ -16,7 +16,7 @@
     </el-form>
 
     <div style="padding: 10px 0">
-      <el-button type="primary">添 加</el-button>
+      <el-button type="primary" @click="addAdminDialogRef.showDialog()">添 加</el-button>
     </div>
 
     <el-table :data="tableData" v-loading="loading" border style="width: 100%">
@@ -54,6 +54,8 @@
       @current-change="handleCurrentChange"
     />
   </div>
+
+  <AddAdminDialog ref="addAdminDialogRef" :roles="options" />
 </template>
 
 <script setup>
@@ -61,8 +63,10 @@
   import { fetchRoleList } from '@/api/auth/role';
   import { fetchAdminList } from '@/api/auth/admin';
   import { ElMessage, ElMessageBox } from 'element-plus';
+  import AddAdminDialog from '@/views/auth/admin/components/addAdminDialog.vue';
 
   const formRef = ref(null);
+  const addAdminDialogRef = ref(null);
   const formData = reactive({
     username: '',
     role_id: '',
@@ -137,7 +141,7 @@
       .catch(() => {});
   };
   const handleEdit = (row) => {
-    console.log('编辑', row.id);
+    addAdminDialogRef.value.showDialog(row);
   };
 </script>
 

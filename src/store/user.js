@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { getInfo, login } from '@/api/base';
-import { getAuthCache, setAuthCache } from '@/utils/auth';
+import { getInfo, login, logout } from '@/api/base';
+import { getAuthCache, setAuthCache, clearAuthCache } from '@/utils/auth';
 import { usePermissionStore } from '@/store/permission';
 import router from '@/router';
 
@@ -95,6 +95,14 @@ export const useUser = defineStore('user', {
         this.setUserInfo(userInfo);
         return userInfo;
       }
+    },
+    async logout() {
+      await logout();
+      this.afterLogout();
+    },
+    afterLogout() {
+      clearAuthCache();
+      this.resetState();
     },
   },
 });
