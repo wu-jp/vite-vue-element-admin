@@ -6,7 +6,8 @@ module.exports = {
     es2021: true,
   },
   parser: 'vue-eslint-parser',
-  extends: ['plugin:vue/vue3-recommended', 'plugin:prettier/recommended'],
+  extends: ['plugin:vue/vue3-recommended'],
+  // extends: ['plugin:vue/vue3-recommended', 'plugin:prettier/recommended'],
   overrides: [],
   parserOptions: {
     ecmaVersion: 2020,

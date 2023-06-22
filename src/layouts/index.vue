@@ -1,27 +1,35 @@
 <template>
   <el-container class="layout-container">
-    <el-aside :width="asideType ? '260px' : '64px'" class="layout-aside-default">
-      <Sidebar :asideType="asideType" />
+    <el-aside
+      :width="asideType ? '260px' : '64px'"
+      class="layout-aside-default"
+    >
+      <Logo />
+      <el-scrollbar class="menus-scrollbar">
+        <Menus :is-collapse="asideType" />
+      </el-scrollbar>
     </el-aside>
     <el-container class="content-wrapper">
-      <Header :asideType="asideType" @changeAsideWidth="changeAsideWidth" />
-      <el-main>
-        <el-scrollbar class="scrollbar-container">
-          <div class="default-main">
-            <PageContent />
-          </div>
-        </el-scrollbar>
-      </el-main>
+      <el-header class="header-container">
+        <ToolBarLeft
+          :aside-type="asideType"
+          @change-asideWidth="changeAsideWidth"
+        />
+        <ToolBarRight />
+      </el-header>
+      <Main />
     </el-container>
   </el-container>
 </template>
 
 <script setup>
-  import PageContent from './page/index.vue';
-  import Sidebar from '@/layouts/components/Sidebar.vue';
-  import Header from './components/header.vue';
+  import Logo from './components/Logo/index.vue'
+  import Menus from './components/menus/index.vue'
+  import ToolBarLeft from './components/Header/ToolBarLeft.vue'
+  import ToolBarRight from './components/Header/ToolBarRight.vue'
   import { useRouter } from 'vue-router';
   import { ref } from 'vue';
+  import Main from './components/Main/index.vue'
 
   const router = useRouter();
   console.log('router-手动注册的路由', router.options.routes);
@@ -34,6 +42,20 @@
 
 <style scoped lang="scss">
   @import 'src/styles/variables.scss';
+
+  .menus-scrollbar {
+    height: calc(100vh - 50px);
+    background-color: #fff;
+  }
+
+  .header-container {
+    background-color: #fff;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .layout-container {
     width: 100%;
@@ -51,21 +73,5 @@
 
   .layout-aside-default {
     transition: width 0.3s ease;
-  }
-
-  .scrollbar-container {
-    height: calc(100vh - 50px);
-    box-sizing: border-box;
-
-    //padding: 15px;
-    //margin: 15px;
-  }
-
-  .default-main {
-    margin: 10px 10px 40px 10px;
-    background: #fff;
-    border-radius: 4px;
-    box-sizing: border-box;
-    padding: 10px;
   }
 </style>

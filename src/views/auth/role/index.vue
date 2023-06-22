@@ -1,6 +1,9 @@
 <template>
   <div>
-    <ProTable :columns="columns" title="角色列表"></ProTable>
+    <ProTable
+      :columns="columns"
+      title="角色列表"
+    />
   </div>
 </template>
 

@@ -1,11 +1,12 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import Layout from '@/layouts/index.vue';
-import pageView from '@/layouts/page/index.vue';
 import { useUserInfo } from '@/store/userInfo';
 import { generateIndexRouter } from '@/utils';
 import { useMemberCenter } from '@/store/memberCenter';
 import { useUser } from '@/store/user';
 import { usePermissionStore } from '@/store/permission';
+
+// Todo 关键点auth.authMenuList and auth.flatMenuListGet 这里可能处理了components属性
 
 export const constantRoutes = [
   {
@@ -46,7 +47,7 @@ export const constantRoutes = [
           icon: '',
           type: '',
         },
-        component: pageView,
+        redirect: '/system/auth/admin',
         children: [
           {
             path: '/system/auth/admin',

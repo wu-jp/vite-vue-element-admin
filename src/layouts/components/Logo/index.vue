@@ -1,5 +1,7 @@
 <template>
-  <div class="logo-container">LOGO</div>
+  <div class="logo-container">
+    wuyioo-admin
+  </div>
 </template>
 
 <script setup></script>
@@ -7,7 +9,7 @@
 <style scoped>
   .logo-container {
     height: 50px;
-    background: olive;
+    background: #30336b;
     text-align: center;
     line-height: 50px;
     color: #fff;
