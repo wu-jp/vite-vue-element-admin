@@ -3,20 +3,22 @@ import { useUser } from '@/store/user';
 import { generateIndexRouter } from '@/utils';
 import { createLocalStorage } from '@/utils/cache';
 import { getShowMenuList, getFlatMenuList } from '@/utils';
+import { staticRouter, errorRouter } from '@/router/modules/staticRouter';
 
 const ls = createLocalStorage();
 
 export const usePermissionStore = defineStore('permission', {
   state: () => ({
+    // 按钮权限列表
     permCodeList: [],
+    // 菜单权限列表
     menuList: [],
+    // 活动路由（当前路由）
+    activeRoute: null,
   }),
   getters: {
     getPermCodeList(state) {
       return state.permCodeList;
-    },
-    getMenuList(state) {
-      return state.menuList;
     },
     showMenuListGet: state => getShowMenuList(state.menuList),
     flatMenuListGet: state => getFlatMenuList(state.menuList),
@@ -26,7 +28,11 @@ export const usePermissionStore = defineStore('permission', {
       this.permCodeList = codeList;
     },
     setMenuList(menuList) {
+      // this.menuList = [...staticRouter, ...errorRouter, ...menuList]
       this.menuList = menuList
+    },
+    setActiveRoute(route) {
+      this.activeRoute = route
     },
     async buildRoutesAction() {
       const userStore = useUser();
@@ -36,8 +42,9 @@ export const usePermissionStore = defineStore('permission', {
       const routes = generateIndexRouter(menu);
 
       console.log('permission', routes)
-      this.setPermCodeList(routes);
-      this.setMenuList(routes);
+
+      this.setMenuList(routes)
+      this.setPermCodeList(routes)
       return routes;
     },
   },

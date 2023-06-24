@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { login } from '@/api/base';
 import { useMemberCenter } from '@/store/memberCenter';
+import { usePermissionStore } from './permission';
 import { generateIndexRouter } from '@/utils';
 
 export const useUserInfo = defineStore('userInfo', {
@@ -38,10 +39,13 @@ export const useUserInfo = defineStore('userInfo', {
           this.username = data.username;
           this.userInfo = data;
 
-          const memberCenter = useMemberCenter();
-          const constRoutes = generateIndexRouter(data.menu);
-          console.log('constRoutes', constRoutes);
-          memberCenter.setViewRoutes(constRoutes);
+          // const constRoutes = generateIndexRouter(data.menu);
+          // console.log('constRoutes', constRoutes);
+          // const memberCenter = useMemberCenter();
+          // memberCenter.setViewRoutes(constRoutes);
+
+          const permissionStore = usePermissionStore();
+          permissionStore.buildRoutesAction()
           return true;
         }
       } catch (error) {

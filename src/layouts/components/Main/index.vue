@@ -2,7 +2,6 @@
   <el-main>
     <el-scrollbar class="scrollbar-container">
       <div class="default-main">
-        <div>fdsafd</div>
         <router-view v-slot="{ Component, route }">
           <transition
             appear

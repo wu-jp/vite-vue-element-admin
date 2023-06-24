@@ -40,18 +40,12 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/' });
     } else {
       const permissionStore = usePermissionStore();
-      let routes = permissionStore.getPermCodeList;
-      console.log(routes, '1111111111');
+      let routes = permissionStore.permCodeList;
       if (routes.length === 0) {
         console.log('从个人信息中获取');
         // 重新添加路由
         routes = await permissionStore.buildRoutesAction();
-        // console.log(routes, '2222222222');
         await initDynamicRouter()
-        // routes.forEach((item) => {
-        //   console.log('item', item);
-        //   router.addRoute('layout', item);
-        // });
         next({ ...to, replace: true });
       } else {
         console.log('直接跳转', to);
