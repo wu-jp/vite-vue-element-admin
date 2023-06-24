@@ -24,7 +24,7 @@
 
   const menu = ref([]);
   const permissionStore = usePermissionStore();
-  menu.value = permissionStore.getMenuList;
+  menu.value = permissionStore.showMenuListGet;
   console.log('💥💥💥', menu.value);
 
   const handleOpen = (key, keyPath) => {

@@ -1,21 +1,27 @@
 <template>
-  <template v-for="menu in props.menus">
+  <template
+    v-for="menu in props.menus"
+    :key="menu.path"
+  >
     <template v-if="!menu.hidden">
-      <template v-if="menu.children && menu.children.length > 0">
-        <el-sub-menu :index="menu.path" :key="menu.path">
-          <template #title>
-            <el-icon><Grid /></el-icon>
-            <span>{{ menu.meta?.title ? menu.meta?.title : 'noTitle' }}</span>
-          </template>
-          <menu-tree :menus="menu.children"></menu-tree>
-        </el-sub-menu>
-      </template>
-      <template v-else>
-        <el-menu-item :index="menu.path" :key="menu.path" @click="onClickMenu(menu)">
-          <el-icon><Menu /></el-icon>
+      <el-sub-menu
+        v-if="menu.children?.length"
+        :index="menu.path"
+      >
+        <template #title>
+          <el-icon><Grid /></el-icon>
           <span>{{ menu.meta?.title ? menu.meta?.title : 'noTitle' }}</span>
-        </el-menu-item>
-      </template>
+        </template>
+        <menu-tree :menus="menu.children" />
+      </el-sub-menu>
+      <el-menu-item
+        v-else
+        :index="menu.path"
+        @click="onClickMenu(menu)"
+      >
+        <el-icon><Menu /></el-icon>
+        <span>{{ menu.meta?.title ? menu.meta?.title : 'noTitle' }}</span>
+      </el-menu-item>
     </template>
   </template>
 </template>
@@ -31,7 +37,7 @@
   const onClickMenu = (menu) => {
     console.log('menu', menu);
     if (menu.path) {
-      router.push({ path: menu.path });
+      router.push(menu.path);
     }
   };
 

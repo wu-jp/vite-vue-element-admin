@@ -2,29 +2,27 @@
   <el-main>
     <el-scrollbar class="scrollbar-container">
       <div class="default-main">
+        <div>fdsafd</div>
         <router-view v-slot="{ Component, route }">
-          <Transition
+          <transition
             appear
             name="fade-transform"
             mode="out-in"
           >
-            <KeepAlive>
+            <keep-alive>
               <component
                 :is="Component"
                 :key="route.fullPath"
               />
-            </KeepAlive>
-          </Transition>
+            </keep-alive>
+          </transition>
         </router-view>
       </div>
     </el-scrollbar>
   </el-main>
 </template>
 
-<script>
-  export default {
-    name: 'Index',
-  };
+<script setup>
 </script>
 
 <style scoped>

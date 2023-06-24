@@ -118,7 +118,8 @@ const generateChildRouters = (data) => {
       path: item.router,
       hidden: item.hidden ? item.hidden : false,
       redirect: item.redirect ? item.redirect : '',
-      component: (resolve) => require(['@/' + component + '.vue'], resolve),
+      // component: (resolve) => require(['@/' + component + '.vue'], resolve),
+      component: item.component,
       meta: {
         title: item.title,
         icon: item.icon,
@@ -190,4 +191,19 @@ export function formatValue(callValue) {
   // 如果当前值为数组，使用 / 拼接（根据需求自定义）
   if (isArray(callValue)) return callValue.length ? callValue.join(' / ') : '--';
   return callValue ?? '--';
+}
+
+// 左侧菜单渲染的列表 (需剔除 isHide == true 的菜单)
+export function getShowMenuList(menuList) {
+  let newMenuList = JSON.parse(JSON.stringify(menuList))
+  return newMenuList.filter(item => {
+    item.children?.length && (item.children = getShowMenuList(item.children))
+    return !item.meta?.isHide
+  })
+}
+
+// 使用递归扁平化菜单，方便添加动态路由
+export function getFlatMenuList(menuList) {
+  let newMenuList = JSON.parse(JSON.stringify(menuList))
+  return newMenuList.flatMap(item => [item, ...(item.children ? getFlatMenuList(item.children) : [])])
 }

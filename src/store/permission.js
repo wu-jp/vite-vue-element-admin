@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { useUser } from '@/store/user';
 import { generateIndexRouter } from '@/utils';
 import { createLocalStorage } from '@/utils/cache';
-import { constantRoutes } from '@/router/index';
+import { getShowMenuList, getFlatMenuList } from '@/utils';
 
 const ls = createLocalStorage();
 
@@ -18,13 +18,15 @@ export const usePermissionStore = defineStore('permission', {
     getMenuList(state) {
       return state.menuList;
     },
+    showMenuListGet: state => getShowMenuList(state.menuList),
+    flatMenuListGet: state => getFlatMenuList(state.menuList),
   },
   actions: {
     setPermCodeList(codeList) {
       this.permCodeList = codeList;
     },
     setMenuList(menuList) {
-      this.menuList = constantRoutes.concat(menuList);
+      this.menuList = menuList
     },
     async buildRoutesAction() {
       const userStore = useUser();
@@ -32,6 +34,8 @@ export const usePermissionStore = defineStore('permission', {
 
       // TODO: 1.返回动态路由用于添加  2.设置菜单列表
       const routes = generateIndexRouter(menu);
+
+      console.log('permission', routes)
       this.setPermCodeList(routes);
       this.setMenuList(routes);
       return routes;
