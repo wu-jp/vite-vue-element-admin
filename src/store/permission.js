@@ -28,7 +28,6 @@ export const usePermissionStore = defineStore('permission', {
       this.permCodeList = codeList;
     },
     setMenuList(menuList) {
-      // this.menuList = [...staticRouter, ...errorRouter, ...menuList]
       this.menuList = menuList
     },
     setActiveRoute(route) {
@@ -37,7 +36,6 @@ export const usePermissionStore = defineStore('permission', {
     async buildRoutesAction() {
       const userStore = useUser();
       const { menu } = userStore.getUserInfo;
-
       // TODO: 1.返回动态路由用于添加  2.设置菜单列表
       const routes = generateIndexRouter(menu);
 

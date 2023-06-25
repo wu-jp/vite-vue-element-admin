@@ -3,12 +3,12 @@ export const staticRouter = [
   {
     path: '/',
     redirect: '/dashboard',
+  },
+  {
+    path: '/layout',
+    name: 'layout',
     component: () => import('@/layouts/index.vue'),
-    meta: {
-      title: 'Dashboard',
-      icon: '',
-      type: '',
-    },
+    redirect: '/dashboard',
     children: [
       {
         path: '/dashboard',
@@ -19,14 +19,7 @@ export const staticRouter = [
           type: 'tab',
         },
       },
-    ],
-  },
-  {
-    path: '/layout',
-    name: 'layout',
-    component: () => import('@/layouts/index.vue'),
-    redirect: '/dashboard',
-    children: []
+    ]
   },
   {
     path: '/login',
