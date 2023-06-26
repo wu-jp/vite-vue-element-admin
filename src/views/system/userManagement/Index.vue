@@ -1,147 +1,144 @@
 <template>
-  <div>
-    <el-form
-      ref="formRef"
-      :model="formData"
-      :inline="true"
+  <el-form
+    ref="formRef"
+    :model="formData"
+    :inline="true"
+  >
+    <el-form-item
+      label="账号:"
+      prop="username"
     >
-      <el-form-item
-        label="账号:"
-        prop="username"
+      <el-input
+        v-model="formData.username"
+        clearable
+        placeholder="输入账号"
+      />
+    </el-form-item>
+    <el-form-item
+      label="角色:"
+      prop="role_id"
+    >
+      <el-select
+        v-model="formData.role_id"
+        clearable
+        placeholder="选择角色"
       >
-        <el-input
-          v-model="formData.username"
-          clearable
-          placeholder="输入账号"
+        <el-option
+          v-for="item in options"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
         />
-      </el-form-item>
-      <el-form-item
-        label="角色:"
-        prop="role_id"
-      >
-        <el-select
-          v-model="formData.role_id"
-          clearable
-          placeholder="选择角色"
-        >
-          <el-option
-            v-for="item in options"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="search"
-        >
-          查 询
-        </el-button>
-        <el-button @click="resetForm(formRef)">
-          重 置
-        </el-button>
-      </el-form-item>
-    </el-form>
-
-    <div style="padding: 10px 0">
+      </el-select>
+    </el-form-item>
+    <el-form-item>
       <el-button
         type="primary"
-        @click="addAdminDialogRef.showDialog()"
+        @click="search"
       >
-        添 加
+        查 询
       </el-button>
-    </div>
+      <el-button @click="resetForm(formRef)">
+        重 置
+      </el-button>
+    </el-form-item>
+  </el-form>
 
-    <el-table
-      v-loading="loading"
-      :data="tableData"
-      border
-      style="width: 100%"
+  <div style="padding: 10px 0">
+    <el-button
+      type="primary"
+      @click="addAdminDialogRef.showDialog()"
     >
-      <el-table-column
-        align="center"
-        prop="id"
-        label="ID"
-        width="60"
-      />
-      <el-table-column
-        align="center"
-        prop="username"
-        label="账号"
-      />
-      <el-table-column
-        align="center"
-        prop="roles"
-        label="角色"
-      >
-        <template #default="{ row }">
-          <span>{{ row.role.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="last_login_time"
-        label="最后登录时间"
-      />
-      <el-table-column
-        align="center"
-        prop="last_login_ip"
-        label="最后登录ip"
-      />
-      <el-table-column
-        align="center"
-        prop="status"
-        label="状态"
-      >
-        <template #default="{ row }">
-          <el-switch
-            v-model="row.status"
-            disabled
-            :active-value="1"
-            :inactive-value="0"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        prop="created_at"
-        label="创建时间"
-      />
-      <el-table-column
-        align="center"
-        label="操作"
-      >
-        <template #default="{ row }">
-          <el-button
-            type="primary"
-            @click="handleEdit(row)"
-          >
-            编辑
-          </el-button>
-          <el-button
-            type="danger"
-            @click="handleDelete(row)"
-          >
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <el-pagination
-      style="padding-top: 10px"
-      background
-      layout="prev, pager, next"
-      :total="pagination.total"
-      :current-page="pagination.page"
-      :page-size="pagination.pageSize"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-    />
+      添 加
+    </el-button>
   </div>
 
+  <el-table
+    v-loading="loading"
+    :data="tableData"
+    border
+    style="width: 100%"
+  >
+    <el-table-column
+      align="center"
+      prop="id"
+      label="ID"
+      width="60"
+    />
+    <el-table-column
+      align="center"
+      prop="username"
+      label="账号"
+    />
+    <el-table-column
+      align="center"
+      prop="roles"
+      label="角色"
+    >
+      <template #default="{ row }">
+        <span>{{ row.role.name }}</span>
+      </template>
+    </el-table-column>
+    <el-table-column
+      align="center"
+      prop="last_login_time"
+      label="最后登录时间"
+    />
+    <el-table-column
+      align="center"
+      prop="last_login_ip"
+      label="最后登录ip"
+    />
+    <el-table-column
+      align="center"
+      prop="status"
+      label="状态"
+    >
+      <template #default="{ row }">
+        <el-switch
+          v-model="row.status"
+          disabled
+          :active-value="1"
+          :inactive-value="0"
+        />
+      </template>
+    </el-table-column>
+    <el-table-column
+      align="center"
+      prop="created_at"
+      label="创建时间"
+    />
+    <el-table-column
+      align="center"
+      label="操作"
+    >
+      <template #default="{ row }">
+        <el-button
+          type="primary"
+          @click="handleEdit(row)"
+        >
+          编辑
+        </el-button>
+        <el-button
+          type="danger"
+          @click="handleDelete(row)"
+        >
+          删除
+        </el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+
+  <el-pagination
+    style="padding-top: 10px"
+    background
+    layout="prev, pager, next"
+    :total="pagination.total"
+    :current-page="pagination.page"
+    :page-size="pagination.pageSize"
+    @size-change="handleSizeChange"
+    @current-change="handleCurrentChange"
+  />
   <AddAdminDialog
     ref="addAdminDialogRef"
     :roles="options"
