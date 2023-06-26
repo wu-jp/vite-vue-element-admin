@@ -8,21 +8,23 @@
     layout="total, sizes, prev, pager, next, jumper"
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
-  ></el-pagination>
+  />
 </template>
 
 <script setup>
   const props = defineProps({
     pageable: {
+      required: true,
       type: Object,
     },
     handleSizeChange: {
+      required: true,
       type: Function,
     },
     handleCurrentChange: {
+      required: true,
       type: Function,
     },
   });
 </script>
 
-<style lang="scss" scoped></style>

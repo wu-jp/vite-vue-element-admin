@@ -10,6 +10,7 @@ import { computed, reactive, toRefs } from 'vue';
  * @returns {{searchInitParam: ToRef<UnwrapNestedRefs<{searchInitParam: {}, totalParam: {}, searchParam: {}, pageable: {total: number, pageSize: number, pageNum: number}, tableData: *[]}>["searchInitParam"]>, totalParam: ToRef<UnwrapNestedRefs<{searchInitParam: {}, totalParam: {}, searchParam: {}, pageable: {total: number, pageSize: number, pageNum: number}, tableData: *[]}>["totalParam"]>, search: (function(): void), searchParam: ToRef<UnwrapNestedRefs<{searchInitParam: {}, totalParam: {}, searchParam: {}, pageable: {total: number, pageSize: number, pageNum: number}, tableData: *[]}>["searchParam"]>, getTableList: (function(): Promise<void>), handleSizeChange: (function(*): void), updateTotalParam: (function(): void), pageable: ToRef<UnwrapNestedRefs<{searchInitParam: {}, totalParam: {}, searchParam: {}, pageable: {total: number, pageSize: number, pageNum: number}, tableData: *[]}>["pageable"]>, reset: (function(): void), tableData: ToRef<UnwrapNestedRefs<{searchInitParam: {}, totalParam: {}, searchParam: {}, pageable: {total: number, pageSize: number, pageNum: number}, tableData: *[]}>["tableData"]>, handleCurrentChange: (function(*): void)}}
  */
 export const useTable = (api, initParam, isPageable, dataCallBack, requestError) => {
+  console.log('11111111111111111')
   const state = reactive({
     tableData: [],
     pageable: {
@@ -21,6 +22,7 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
     searchInitParam: {},
     totalParam: {},
   });
+  console.log('22222222222222222222')
 
   const pageParam = computed({
     get: () => {
@@ -33,12 +35,16 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
       console.log('我是分页更新之后的值', newVal);
     },
   });
+  console.log('3333333333333333')
 
   const getTableList = async () => {
     if (!api) return;
     try {
-      Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
-      let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
+      // Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
+      // let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
+
+      let { data } = await api();
+      console.log('请求数据', data)
       dataCallBack && (data = dataCallBack(data));
 
       state.tableData = isPageable ? data.list : data;

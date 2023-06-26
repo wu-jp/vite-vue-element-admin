@@ -1,6 +1,7 @@
 <script setup>
   import { computed, ref } from 'vue';
   import SearchFormItem from './components/SearchFormItem.vue';
+  import {Delete, Search} from '@element-plus/icons-vue'
 
   const props = defineProps({
     columns: {
@@ -40,14 +41,36 @@
 </script>
 
 <template>
-  <div v-if="columns.length" class="card table-search">
-    <el-form ref="formRef" :model="searchParam">
-      <el-form-item v-for="item in columns" :key="item.prop" :label="`${item.label}:`">
-        <SearchFormItem :column="item" :search-param="searchParam" />
+  <div
+    v-if="columns.length"
+    class="card table-search"
+  >
+    <el-form
+      ref="formRef"
+      :model="searchParam"
+    >
+      <el-form-item
+        v-for="item in columns"
+        :key="item.prop"
+        :label="`${item.label}:`"
+      >
+        <SearchFormItem
+          :column="item"
+          :search-param="searchParam"
+        />
       </el-form-item>
       <div class="operation">
-        <el-button type="primary" :icon="Search" @click="search"> 搜索 </el-button>
-        <el-button :icon="Delete" @click="reset"> 重置 </el-button>
+        <el-button
+          type="primary"
+          :icon="Search"
+        >
+          搜索
+        </el-button>
+        <el-button
+          :icon="Delete"
+        >
+          重置
+        </el-button>
         <el-button
           v-if="showCollapse"
           type="primary"
@@ -57,7 +80,7 @@
         >
           {{ collapsed ? '展开' : '合并' }}
           <el-icon class="el-icon--right">
-            <component :is="collapsed ? ArrowDown : ArrowUp"></component>
+            <component :is="collapsed ? ArrowDown : ArrowUp" />
           </el-icon>
         </el-button>
       </div>
