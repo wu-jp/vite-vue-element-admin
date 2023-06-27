@@ -18,26 +18,11 @@
             :is-selected="isSelected"
           />
         </div>
-        <div
-          v-if="toolButton"
-          class="header-button-ri"
-        >
+        <div v-if="toolButton" class="header-button-ri">
           <slot name="toolButton">
-            <el-button
-              :icon="Refresh"
-              circle
-              @click="getTableList"
-            />
-            <el-button
-              v-if="columns.length"
-              :icon="Printer"
-              circle
-            />
-            <el-button
-              v-if="columns.length"
-              :icon="Operation"
-              circle
-            />
+            <el-button :icon="Refresh" circle @click="getTableList" />
+            <el-button v-if="columns.length" :icon="Printer" circle />
+            <el-button v-if="columns.length" :icon="Operation" circle />
             <el-button
               v-if="searchColumns.length"
               :icon="Search"
@@ -50,15 +35,13 @@
       <el-table
         ref="tableRef"
         v-bind="$attrs"
+        :data="tableData"
         :border="border"
         :row-key="rowKey"
         @selection-change="selectionChange"
       >
         <slot />
-        <template
-          v-for="item in tableColumns"
-          :key="item"
-        >
+        <template v-for="item in tableColumns" :key="item">
           <!--selection index expand-->
           <el-table-column
             v-if="item.type && ['selection', 'index', 'expand'].includes(item.type)"
@@ -66,35 +49,16 @@
             :align="item.align ?? 'center'"
             :reserve-selection="item.type === 'selection'"
           >
-            <template
-              v-if="item.type === 'expand'"
-              #default="scope"
-            >
-              <component
-                :is="item.render"
-                v-bind="scope"
-                v-if="item.render"
-              />
-              <slot
-                :name="item.type"
-                v-bind="scope"
-              />
+            <template v-if="item.type === 'expand'" #default="scope">
+              <component :is="item.render" v-bind="scope" v-if="item.render" />
+              <slot :name="item.type" v-bind="scope" />
             </template>
           </el-table-column>
 
           <!-- other -->
-          <TableColumn
-            v-if="!item.type && item.prop && item.isShow"
-            :column="item"
-          >
-            <template
-              v-for="slot in Object.keys($slots)"
-              #[slot]="scope"
-            >
-              <slot
-                :name="slot"
-                v-bind="scope"
-              />
+          <TableColumn v-if="!item.type && item.prop && item.isShow" :column="item">
+            <template v-for="slot in Object.keys($slots)" #[slot]="scope">
+              <slot :name="slot" v-bind="scope" />
             </template>
           </TableColumn>
         </template>
@@ -106,10 +70,7 @@
         <template #empty>
           <div class="table-empty">
             <slot name="empty">
-              <img
-                src="@/assets/images/notData.png"
-                alt="notData"
-              >
+              <img src="@/assets/images/notData.png" alt="notData" />
               <div>暂无数据</div>
             </slot>
           </div>
@@ -130,7 +91,7 @@
 </template>
 
 <script setup>
-  import Pagination from './components/Pagination.vue'
+  import Pagination from './components/Pagination.vue';
   import SearchForm from '@/components/SearchForm/index.vue';
   import TableColumn from './components/TableColumn.vue';
   import { onMounted, provide, ref, watch } from 'vue';
