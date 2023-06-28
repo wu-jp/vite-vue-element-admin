@@ -22,6 +22,8 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
     totalParam: {},
   });
 
+  console.log('💥💥', isPageable);
+
   const pageParam = computed({
     get: () => {
       return {
