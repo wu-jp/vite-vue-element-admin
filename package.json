@@ -14,7 +14,7 @@
     "dayjs": "^1.11.1",
     "echarts": "^5.4.2",
     "echarts-liquidfill": "^3.1.0",
-    "element-plus": "^2.1.11",
+    "element-plus": "^2.3.7",
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",

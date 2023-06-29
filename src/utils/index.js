@@ -165,6 +165,17 @@ export function filterEnum(callValue, enumData, fieldNames, type) {
 }
 
 /**
+ * @description 递归查找 callValue 对应的 enum 值
+ * */
+export function findItemNested(enumData, callValue, value, children) {
+  return enumData.reduce((accumulator, current) => {
+    if (accumulator) return accumulator;
+    if (current[value] === callValue) return current;
+    if (current[children]) return findItemNested(current[children], callValue, value, children);
+  }, null);
+}
+
+/**
  * @description 处理 prop 为多级嵌套的情况，返回的数据 (列如: prop: user.name)
  * @param {Object} row 当前行数据
  * @param {String} prop 当前 prop
@@ -195,15 +206,18 @@ export function formatValue(callValue) {
 
 // 左侧菜单渲染的列表 (需剔除 isHide == true 的菜单)
 export function getShowMenuList(menuList) {
-  let newMenuList = JSON.parse(JSON.stringify(menuList))
-  return newMenuList.filter(item => {
-    item.children?.length && (item.children = getShowMenuList(item.children))
-    return !item.meta?.isHide
-  })
+  let newMenuList = JSON.parse(JSON.stringify(menuList));
+  return newMenuList.filter((item) => {
+    item.children?.length && (item.children = getShowMenuList(item.children));
+    return !item.meta?.isHide;
+  });
 }
 
 // 使用递归扁平化菜单，方便添加动态路由
 export function getFlatMenuList(menuList) {
-  let newMenuList = JSON.parse(JSON.stringify(menuList))
-  return newMenuList.flatMap(item => [item, ...(item.children ? getFlatMenuList(item.children) : [])])
+  let newMenuList = JSON.parse(JSON.stringify(menuList));
+  return newMenuList.flatMap((item) => [
+    item,
+    ...(item.children ? getFlatMenuList(item.children) : []),
+  ]);
 }
