@@ -12,6 +12,14 @@
       type: Object,
       default: () => {},
     },
+    search: {
+      type: Function,
+      required: true
+    },
+    reset: {
+      type: Function,
+      required: true
+    }
   });
 
   // 是否默认折叠搜索项
@@ -41,14 +49,39 @@
 </script>
 
 <template>
-  <div v-if="columns.length" class="card table-search">
-    <el-form ref="formRef" :model="searchParam" inline>
-      <el-form-item v-for="item in columns" :key="item.prop" :label="`${item.label}:`">
-        <SearchFormItem :column="item" :search-param="searchParam" />
+  <div
+    v-if="columns.length"
+    class="card table-search"
+  >
+    <el-form
+      ref="formRef"
+      :model="searchParam"
+      inline
+    >
+      <el-form-item
+        v-for="item in columns"
+        :key="item.prop"
+        :label="`${item.label}:`"
+      >
+        <SearchFormItem
+          :column="item"
+          :search-param="searchParam"
+        />
       </el-form-item>
       <el-form-item class="operation">
-        <el-button type="primary" :icon="Search"> 搜索 </el-button>
-        <el-button :icon="Delete"> 重置 </el-button>
+        <el-button
+          type="primary"
+          :icon="Search"
+          @click="search"
+        >
+          搜索
+        </el-button>
+        <el-button
+          :icon="Delete"
+          @click="reset"
+        >
+          重置
+        </el-button>
         <el-button
           v-if="showCollapse"
           type="primary"

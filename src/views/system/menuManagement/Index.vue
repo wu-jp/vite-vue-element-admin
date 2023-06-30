@@ -1,26 +1,54 @@
 <template>
   <ProTable
+    v-if="showTable"
     :tree-props="{ children: '_child', hasChildren: 'hasChildren' }"
     :request-api="getTableList"
     :columns="columns"
     title="菜单列表"
     :pagination="false"
+    :default-expand-all="expandTable"
   >
+    <template #tableHeader="{ row }">
+      <el-button
+        type="primary"
+      >
+        添 加
+      </el-button>
+      <el-button
+        type="primary"
+        @click="changeExpand"
+      >
+        {{ expandTable ? '折叠' : '展开' }}
+      </el-button>
+    </template>
     <template #method="{ row }">
       <el-tag
         v-if="row.method === 1 || row.method === 2 || row.method === 3"
         :type="row.method === 1 ? '' : row.method === 2 ? 'warning' : 'success'"
-        >{{ row.method === 1 ? 'GET' : row.method === 2 ? 'POST' : 'ANY' }}</el-tag
       >
+        {{ row.method === 1 ? 'GET' : row.method === 2 ? 'POST' : 'ANY' }}
+      </el-tag>
     </template>
 
     <template #operation="{ row }">
-      <el-button v-if="row.is_system !== 1" text bg type="primary" @click="handleEdit(row)"
-        >编辑</el-button
+      <el-button
+        v-if="row.is_system !== 1"
+        text
+        bg
+        type="primary"
+        @click="handleEdit(row)"
       >
-      <el-button v-if="row.is_system !== 1" text bg type="danger" @click="handleDelete(row)"
-        >删除</el-button
+        编辑
+      </el-button>
+      <el-button
+        v-if="row.is_system !== 1"
+        text
+        bg
+        type="danger"
+        @click="handleDelete(row)"
       >
+        删除
+      </el-button>
     </template>
   </ProTable>
 </template>
@@ -28,10 +56,11 @@
 <script setup>
   import ProTable from '@/components/ProTable/index.vue';
   import { fetchMenuList } from '@/api/auth/menu';
+  import {nextTick, ref} from "vue";
 
   // 表格配置项
   const columns = [
-    { prop: 'title', label: '菜单名称', align: 'left' },
+    { prop: 'title', label: '菜单名称', align: 'left', width: 200 },
     {
       prop: 'type',
       label: '菜单类型',
@@ -55,6 +84,17 @@
   const getTableList = (params) => {
     return fetchMenuList({});
   };
+
+  const showTable = ref(true)
+  const expandTable = ref(false)
+
+  function changeExpand() {
+    expandTable.value = !expandTable.value
+    showTable.value = false
+    nextTick(() => {
+      showTable.value = true
+    })
+  }
 </script>
 
 <style lang="scss" scoped></style>

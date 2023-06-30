@@ -22,13 +22,17 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
     totalParam: {},
   });
 
-  console.log('💥💥', isPageable);
-
   const pageParam = computed({
     get: () => {
+      // return {
+      //   pageNum: state.pageable.pageNum,
+      //   pageSize: state.pageable.pageSize,
+      // };
+
+      // 兼容字段名😂 根据项目分页字段自行调整
       return {
-        pageNum: state.pageable.pageNum,
-        pageSize: state.pageable.pageSize,
+        page: state.pageable.pageNum,
+        per_page: state.pageable.pageSize,
       };
     },
     set: (newVal) => {
@@ -39,11 +43,12 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
   const getTableList = async () => {
     if (!api) return;
     try {
-      // Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
-      // let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
+      Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
+      console.log('合并列表请求参数', { ...state.searchInitParam, ...state.totalParam })
+      let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
 
-      let { data } = await api();
-      console.log('请求数据', data);
+      // let { data } = await api();
+      console.log('请求数据结果✅', data);
       dataCallBack && (data = dataCallBack(data));
 
       state.tableData = isPageable ? data.list : data;
@@ -72,6 +77,7 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
         newSearchParam[key] = state.searchParam[key];
       }
     }
+    Object.assign(state.totalParam, newSearchParam, isPageable ? pageParam.value : {})
   };
 
   /**

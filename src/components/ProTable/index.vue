@@ -18,11 +18,26 @@
             :is-selected="isSelected"
           />
         </div>
-        <div v-if="toolButton" class="header-button-ri">
+        <div
+          v-if="toolButton"
+          class="header-button-ri"
+        >
           <slot name="toolButton">
-            <el-button :icon="Refresh" circle @click="getTableList" />
-            <el-button v-if="columns.length" :icon="Printer" circle />
-            <el-button v-if="columns.length" :icon="Operation" circle />
+            <el-button
+              :icon="Refresh"
+              circle
+              @click="getTableList"
+            />
+            <el-button
+              v-if="columns.length"
+              :icon="Printer"
+              circle
+            />
+            <el-button
+              v-if="columns.length"
+              :icon="Operation"
+              circle
+            />
             <el-button
               v-if="searchColumns.length"
               :icon="Search"
@@ -41,7 +56,10 @@
         @selection-change="selectionChange"
       >
         <slot />
-        <template v-for="item in tableColumns" :key="item">
+        <template
+          v-for="item in tableColumns"
+          :key="item"
+        >
           <!--selection index expand-->
           <el-table-column
             v-if="item.type && ['selection', 'index', 'expand'].includes(item.type)"
@@ -49,16 +67,35 @@
             :align="item.align ?? 'center'"
             :reserve-selection="item.type === 'selection'"
           >
-            <template v-if="item.type === 'expand'" #default="scope">
-              <component :is="item.render" v-bind="scope" v-if="item.render" />
-              <slot :name="item.type" v-bind="scope" />
+            <template
+              v-if="item.type === 'expand'"
+              #default="scope"
+            >
+              <component
+                :is="item.render"
+                v-bind="scope"
+                v-if="item.render"
+              />
+              <slot
+                :name="item.type"
+                v-bind="scope"
+              />
             </template>
           </el-table-column>
 
           <!-- other -->
-          <TableColumn v-if="!item.type && item.prop && item.isShow" :column="item">
-            <template v-for="slot in Object.keys($slots)" #[slot]="scope">
-              <slot :name="slot" v-bind="scope" />
+          <TableColumn
+            v-if="!item.type && item.prop && item.isShow"
+            :column="item"
+          >
+            <template
+              v-for="slot in Object.keys($slots)"
+              #[slot]="scope"
+            >
+              <slot
+                :name="slot"
+                v-bind="scope"
+              />
             </template>
           </TableColumn>
         </template>
@@ -70,7 +107,10 @@
         <template #empty>
           <div class="table-empty">
             <slot name="empty">
-              <img src="@/assets/images/notData.png" alt="notData" />
+              <img
+                src="@/assets/images/notData.png"
+                alt="notData"
+              >
               <div>暂无数据</div>
             </slot>
           </div>
@@ -179,8 +219,19 @@
   const setEnumMap = async (col) => {
     if (!col.enum) return;
     // 如果当前 enum 为后台数据需要请求数据，则调用该请求接口，并存储到 enumMap
+
+    console.log('type', typeof col.enum)
     if (typeof col.enum !== 'function') return enumMap.value.set(col.prop, col.enum);
-    const data = await col.enum();
+
+    let data
+    if(col.enumPagination) {
+      console.log(121212)
+      const res = await col.enum({page: 1, per_page: '10000'})
+      console.log('res11111111', res)
+      data = res.data.list
+    }else {
+      data = await col.enum();
+    }
     enumMap.value.set(col.prop, data);
   };
 

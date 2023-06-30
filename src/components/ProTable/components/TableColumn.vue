@@ -39,6 +39,7 @@
           >
             {{
               default: (scope) => {
+                // console.log(scope.row)
                 if (item._children) return item._children.map((child) => RenderTableColumn(child));
                 if (item.render) return item.render(scope);
                 if (slots[handleProp(item.prop)]) return slots[handleProp(item.prop)](scope);

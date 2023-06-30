@@ -76,11 +76,14 @@
   <component
     :is="column.search.render ?? `el-${column.search.el}`"
     v-bind="{ ...handleSearchProps, ...placeholder, searchParam, clearable }"
-    v-model.trim="_searchParam[column.search?.key ?? handleProp(column.prop)]"
+    v-model="_searchParam[column.search?.key ?? handleProp(column.prop)]"
     :data="column.search.el === 'tree-select' ? columnEnum : []"
     :options="['cascader', 'select-v2'].includes(column.search.el) ? columnEnum : []"
   >
-    <template v-if="column.search.el === 'cascader'" #default="{ data }">
+    <template
+      v-if="column.search.el === 'cascader'"
+      #default="{ data }"
+    >
       <span>{{ data[fieldNames.label] }}</span>
     </template>
     <template v-if="column.search.el === 'select'">
@@ -90,9 +93,9 @@
         :key="index"
         :label="col[fieldNames.label]"
         :value="col[fieldNames.value]"
-      ></component>
+      />
     </template>
-    <slot v-else></slot>
+    <slot v-else />
   </component>
 </template>
 
