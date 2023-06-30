@@ -247,3 +247,9 @@
     }
   }
 }
+
+.el-menu {
+  .is-active {
+    background-color: rgba($color: #30336b, $alpha: 15%);
+  }
+}

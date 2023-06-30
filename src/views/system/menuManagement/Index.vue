@@ -82,7 +82,7 @@
   ];
 
   const getTableList = (params) => {
-    return fetchMenuList({});
+    return fetchMenuList(params);
   };
 
   const showTable = ref(true)

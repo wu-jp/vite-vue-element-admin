@@ -63,7 +63,7 @@
   ];
 
   const getTableList = (params) => {
-    return fetchRoleList({});
+    return fetchRoleList(params);
   };
 </script>
 

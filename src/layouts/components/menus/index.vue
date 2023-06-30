@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    active-text-color="#409eff"
+    active-text-color="#30336b"
     background-color="#fff"
     class="el-menu-vertical-demo"
     default-active="2"

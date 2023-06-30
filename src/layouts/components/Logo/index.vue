@@ -1,6 +1,10 @@
 <template>
   <div class="logo-container">
-    wuyioo-admin
+    <img
+      src="/party_2.ico"
+      alt=""
+      style="width: 50px;height: 50px"
+    > <span>WuYi Admin</span>
   </div>
 </template>
 
@@ -13,6 +17,9 @@
     text-align: center;
     line-height: 50px;
     color: #fff;
-    font-size: 20px;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
