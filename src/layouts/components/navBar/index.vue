@@ -15,7 +15,7 @@
 <script setup>
   import circleUrl from '@/assets/avatar.png';
   import { ref } from 'vue';
-  import { useUser } from '@/store/user';
+  import { useUser } from '@/store/modules/user';
   import { ElMessage } from 'element-plus';
   import { useRouter } from 'vue-router';
 

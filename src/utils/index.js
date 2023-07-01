@@ -84,14 +84,16 @@ export const withInstall = (component, alias) => {
   return component;
 };
 
-// 生成首页路由
-export const generateIndexRouter = (data) => {
-  data = routerSort(data);
-  const indexRouter = [...generateChildRouters(data)];
-  return indexRouter;
+/**
+ * 格式化服务端返回的路由数据，更具具体的项目自己定义
+ * @param data
+ * @returns {*[]}
+ */
+export const formatMenuData = (data) => {
+  return [...generateChildRouters(routerSort(data))];
 };
 
-// 对路由进行排序
+// 对菜单进行排序
 const routerSort = (arr) => {
   arr.sort((a, b) => a.sort - b.sort);
   arr.forEach((item) => {
@@ -102,41 +104,30 @@ const routerSort = (arr) => {
   return arr;
 };
 
-// 生成嵌套路由（子路由）
+// 递归格式化
 const generateChildRouters = (data) => {
   const routers = [];
   for (const item of data) {
-    let component = '';
-    if (item.level === 1) {
-      component = 'layout/index.vue';
-    } else if (item._child && item.level !== 2) {
-      component = 'layout/pageView/Index';
-    } else {
-      component = 'views/' + item.component;
-    }
     const menu = {
       path: item.router,
       hidden: item.hidden ? item.hidden : false,
       redirect: item.redirect ? item.redirect : '',
-      // component: (resolve) => require(['@/' + component + '.vue'], resolve),
       component: item.component,
       meta: {
         title: item.title,
         icon: item.icon,
       },
     };
-    if (item._child && item._child.length > 0) {
+    if (item._child?.length > 0) {
       menu.children = [...generateChildRouters(item._child)];
     }
-    // --update-begin----author:scott---date:20190320------for:根据后台菜单配置，判断是否路由菜单字段，动态选择是否生成路由（为了支持参数URL菜单）------
-    // 判断是否生成路由
+    // 是否生成路由
     if (item.route && item.route === '0') {
       console.log(' 不生成路由 item.route：  ' + item.route);
       console.log(' 不生成路由 item.path：  ' + item.path);
     } else {
       routers.push(menu);
     }
-    // --update-end----author:scott---date:20190320------for:根据后台菜单配置，判断是否路由菜单字段，动态选择是否生成路由（为了支持参数URL菜单）------
   }
   return routers;
 };

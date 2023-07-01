@@ -6,8 +6,6 @@
     default-active="2"
     text-color="#333"
     :collapse="!isCollapse"
-    @open="handleOpen"
-    @close="handleClose"
   >
     <MenuTree :menus="menu" />
   </el-menu>
@@ -17,22 +15,14 @@
   import MenuTree from './menuTree.vue';
   import menuData from '@/assets/menus.json';
   import { ref, watch } from 'vue';
-  import { useMemberCenter } from '@/store/memberCenter';
-  import { usePermissionStore } from '@/store/permission';
+  import { useAuthStore } from '@/store/modules/auth';
 
   const props = defineProps(['isCollapse']);
 
   const menu = ref([]);
-  const permissionStore = usePermissionStore();
+  const permissionStore = useAuthStore();
   menu.value = permissionStore.showMenuListGet;
   console.log('💥💥💥', menu.value);
-
-  const handleOpen = (key, keyPath) => {
-    console.log(key, keyPath);
-  };
-  const handleClose = (key, keyPath) => {
-    console.log(key, keyPath);
-  };
 
   const handleMenuRule = (routes, pathPrefix = '/', parent = '/') => {
     const menuRule = []; //这是菜单
@@ -73,8 +63,7 @@
     }
 
     if (authNode.length) {
-      const memberCenter = useMemberCenter();
-      memberCenter.setAuthNode(parent, authNode);
+      // 设置按钮节点
     }
     console.log(parent);
     return menuRule;
@@ -82,10 +71,6 @@
 
   // 这里是从json文件拿的菜单
   // menu.value = handleMenuRule(menuData);
-
-  // 这里是从接口里取的路由
-  // const memberCenter = useMemberCenter();
-  // menu.value = memberCenter.state.routes;
 </script>
 
 <style scoped>

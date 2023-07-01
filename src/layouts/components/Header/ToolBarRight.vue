@@ -1,22 +1,10 @@
 <template>
   <div>
-    <el-dropdown
-      ref="dropdown"
-      trigger="contextmenu"
-    >
-      <el-avatar
-        :size="40"
-        :src="circleUrl"
-        @click="showClick"
-      />
+    <el-dropdown ref="dropdown" trigger="contextmenu">
+      <el-avatar :size="40" :src="circleUrl" @click="showClick" />
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            divided
-            @click="logout"
-          >
-            退出登录
-          </el-dropdown-item>
+          <el-dropdown-item divided @click="logout"> 退出登录 </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -26,7 +14,7 @@
 <script setup>
   import circleUrl from '@/assets/avatar.png';
   import { ref } from 'vue';
-  import { useUser } from '@/store/user';
+  import { useUser } from '@/store/modules/user';
   import { ElMessage } from 'element-plus';
   import { useRouter } from 'vue-router';
 

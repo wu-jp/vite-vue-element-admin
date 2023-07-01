@@ -1,36 +1,15 @@
 <template>
   <div class="login-wrapper">
-    <el-form
-      ref="loginFormRef"
-      :model="loginForm"
-      :rules="rules"
-      label-width="100px"
-    >
-      <el-form-item
-        label="账号："
-        prop="username"
-      >
+    <el-form ref="loginFormRef" :model="loginForm" :rules="rules" label-width="100px">
+      <el-form-item label="账号：" prop="username">
         <el-input v-model="loginForm.username" />
       </el-form-item>
-      <el-form-item
-        label="密码："
-        prop="password"
-      >
-        <el-input
-          v-model="loginForm.password"
-          type="password"
-        />
+      <el-form-item label="密码：" prop="password">
+        <el-input v-model="loginForm.password" type="password" />
       </el-form-item>
       <el-form-item>
-        <el-button @click="submitForm(loginFormRef)">
-          忘记密码
-        </el-button>
-        <el-button
-          type="primary"
-          @click="submitLogin(loginFormRef)"
-        >
-          登录
-        </el-button>
+        <el-button @click="submitForm(loginFormRef)"> 忘记密码 </el-button>
+        <el-button type="primary" @click="submitLogin(loginFormRef)"> 登录 </el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -38,10 +17,9 @@
 
 <script setup>
   import { reactive, ref } from 'vue';
-  import { ElMessage } from 'element-plus';
-  import { useUserInfo } from '@/store/userInfo';
+  import { ElMessage, ElNotification } from 'element-plus';
   import { useRouter } from 'vue-router';
-  import { useUser } from '@/store/user';
+  import { useUser } from '@/store/modules/user';
   const router = useRouter();
 
   const loginFormRef = ref(null);
@@ -60,15 +38,15 @@
       if (valid) {
         try {
           const user = useUser();
-          const userinfo = await user.login(loginForm);
-          console.log(userinfo);
-          ElMessage({
-            message: '登录成功',
+          await user.login(loginForm);
+          ElNotification({
+            title: '登录成功',
+            message: '欢迎登录 WuYi-Admin',
             type: 'success',
+            duration: 3000,
           });
-          await router.push('/');
+          router.push('/');
         } catch (e) {
-          console.log('e', e);
           ElMessage({
             message: '登录失败',
             type: 'error',
@@ -83,7 +61,6 @@
 
 <style scoped>
   .login-wrapper {
-    /*background: rebeccapurple;*/
     width: 300px;
     padding: 20px;
     position: absolute;

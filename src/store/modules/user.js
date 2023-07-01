@@ -1,15 +1,14 @@
 import { defineStore } from 'pinia';
 import { getInfo, login, logout } from '@/api/base';
 import { getAuthCache, setAuthCache, clearAuthCache } from '@/utils/auth';
-import { usePermissionStore } from '@/store/permission';
-import router from '@/router';
+import { useAuthStore } from '@/store/modules/auth';
+import { initDynamicRouter } from '@/router/modules/dynamicRouter';
 
 export const useUser = defineStore('user', {
   state: () => {
     return {
       token: null,
       userInfo: null,
-      roleList: [],
       sessionTimeout: false,
     };
   },
@@ -20,9 +19,6 @@ export const useUser = defineStore('user', {
     getToken(state) {
       return state.token || getAuthCache('token');
     },
-    getRuleList(state) {
-      return state.roleList || getAuthCache('ruleList');
-    },
     getSessionTimeout(state) {
       return !!state.sessionTimeout;
     },
@@ -32,10 +28,7 @@ export const useUser = defineStore('user', {
       this.token = info;
       setAuthCache('token', info);
     },
-    setRoleList(ruleList) {
-      this.roleList = ruleList;
-      setAuthCache('ruleList', ruleList);
-    },
+
     setUserInfo(info) {
       this.undefined = info;
       setAuthCache('userInfo', info);
@@ -46,7 +39,6 @@ export const useUser = defineStore('user', {
     resetState() {
       this.userInfo = null;
       this.token = undefined;
-      this.roleList = [];
       this.sessionTimeout = false;
     },
     // login
@@ -64,17 +56,10 @@ export const useUser = defineStore('user', {
     },
     async afterLoginAction() {
       if (!this.token) return null;
-
       const userInfo = await this.getUserInfoAction();
-      // const sessionTimeout = this.sessionTimeout;
-
-      // 调用 usePermissionStore 的方法设置路由
-      const permissionStore = usePermissionStore();
-      const routes = await permissionStore.buildRoutesAction();
-
-      routes.forEach((item) => {
-        router.addRoute(item);
-      });
+      const permissionStore = useAuthStore();
+      await permissionStore.buildRoutesAction();
+      await initDynamicRouter();
       return userInfo;
     },
     async getUserInfoAction() {
@@ -82,18 +67,8 @@ export const useUser = defineStore('user', {
       const res = await getInfo();
       const { code, data } = res;
       if (code === 0) {
-        const userInfo = data;
-        console.log('userInfo', userInfo);
-        const { roles = [] } = userInfo;
-        if (Array.isArray(roles)) {
-          this.setRoleList(roles);
-        } else {
-          userInfo.rules = [];
-          this.setRoleList([]);
-        }
-
-        this.setUserInfo(userInfo);
-        return userInfo;
+        this.setUserInfo(data);
+        return data;
       }
     },
     async logout() {

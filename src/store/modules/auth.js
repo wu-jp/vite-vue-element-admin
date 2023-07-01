@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
-import { useUser } from '@/store/user';
-import { generateIndexRouter } from '@/utils';
-import { createLocalStorage } from '@/utils/cache';
-import { getShowMenuList, getFlatMenuList } from '@/utils';
+import { useUser } from '@/store/modules/user';
+import { formatMenuData, getShowMenuList, getFlatMenuList } from '@/utils';
 import { staticRouter, errorRouter } from '@/router/modules/staticRouter';
-
+import { createLocalStorage } from '@/utils/cache';
 const ls = createLocalStorage();
 
-export const usePermissionStore = defineStore('permission', {
+export const useAuthStore = defineStore('permission', {
   state: () => ({
     // 按钮权限列表
     permCodeList: [],
@@ -20,29 +18,30 @@ export const usePermissionStore = defineStore('permission', {
     getPermCodeList(state) {
       return state.permCodeList;
     },
-    showMenuListGet: state => getShowMenuList(state.menuList),
-    flatMenuListGet: state => getFlatMenuList(state.menuList),
+    showMenuListGet: (state) => getShowMenuList(state.menuList),
+    flatMenuListGet: (state) => getFlatMenuList(state.menuList),
   },
   actions: {
     setPermCodeList(codeList) {
       this.permCodeList = codeList;
     },
     setMenuList(menuList) {
-      this.menuList = menuList
+      this.menuList = menuList;
     },
     setActiveRoute(route) {
-      this.activeRoute = route
+      this.activeRoute = route;
     },
+    // 构建路由
     async buildRoutesAction() {
       const userStore = useUser();
+      // 个人信息的路由
       const { menu } = userStore.getUserInfo;
-      // TODO: 1.返回动态路由用于添加  2.设置菜单列表
-      const routes = generateIndexRouter(menu);
-
-      console.log('permission', routes)
-
-      this.setMenuList(routes)
-      this.setPermCodeList(routes)
+      // 转换路由
+      console.log('格式化前的路由', menu);
+      const routes = formatMenuData(menu);
+      console.log('格式化后的路由', routes);
+      this.setMenuList(routes);
+      this.setPermCodeList(routes);
       return routes;
     },
   },
