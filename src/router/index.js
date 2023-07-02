@@ -38,6 +38,9 @@ router.beforeEach(async (to, from, next) => {
         next({ ...to, replace: true });
       } else {
         console.log('直接跳转', to);
+
+        const authStore = useAuthStore();
+        authStore.setActiveRoute(to);
         next();
       }
     }

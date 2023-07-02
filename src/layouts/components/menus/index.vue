@@ -1,28 +1,31 @@
 <template>
   <el-menu
-    active-text-color="#30336b"
-    background-color="#fff"
     class="el-menu-vertical-demo"
-    default-active="2"
-    text-color="#333"
+    :default-active="activeMenu"
     :collapse="!isCollapse"
+    active-text-color="#B33771"
+    background-color="#fff"
+    text-color="#333"
   >
     <MenuTree :menus="menu" />
   </el-menu>
 </template>
 <!--#B4D5FF-->
 <script setup>
+  import { useRoute } from 'vue-router';
   import MenuTree from './menuTree.vue';
   import menuData from '@/assets/menus.json';
-  import { ref, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useAuthStore } from '@/store/modules/auth';
 
+  const route = useRoute();
   const props = defineProps(['isCollapse']);
 
-  const menu = ref([]);
-  const permissionStore = useAuthStore();
-  menu.value = permissionStore.showMenuListGet;
-  console.log('💥💥💥', menu.value);
+  const authStore = useAuthStore();
+
+  const menu = computed(() => authStore.showMenuListGet);
+  // menu 默认选中的路由，如果是详情页面则会使用 meta.activeMenu 否则使用 route.path
+  const activeMenu = computed(() => (route.meta?.activeMenu ? route.meta.activeMenu : route.path));
 
   const handleMenuRule = (routes, pathPrefix = '/', parent = '/') => {
     const menuRule = []; //这是菜单
