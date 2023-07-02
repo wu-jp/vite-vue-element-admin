@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useConfigStore = defineStore('config', {
   state: () => ({
     // 折叠菜单
-    isCollapse: false,
+    isCollapse: true,
   }),
   getters: {},
   actions: {

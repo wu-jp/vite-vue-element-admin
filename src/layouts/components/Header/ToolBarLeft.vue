@@ -8,7 +8,7 @@
     </el-icon>
 
     <el-breadcrumb separator="/" style="margin-left: 20px">
-      <el-breadcrumb-item v-for="item in pathArray" :key="item.path">
+      <el-breadcrumb-item v-for="item in breadcrumbList" :key="item.path">
         {{ item.meta.title }}
       </el-breadcrumb-item>
     </el-breadcrumb>
@@ -17,28 +17,24 @@
 
 <script setup>
   import { useRoute } from 'vue-router';
-  import { computed, ref, watch } from 'vue';
+  import { computed } from 'vue';
   import { useConfigStore } from '@/store/modules/config';
+  import { useAuthStore } from '@/store/modules/auth';
   const emit = defineEmits(['changeAsideWidth']);
   const route = useRoute();
   const configStore = useConfigStore();
   const isCollapse = computed(() => configStore.isCollapse);
 
   const changeCollapse = () => {
-    console.log('dfadsf');
     configStore.setConfigState('isCollapse', !configStore.isCollapse);
   };
 
-  const pathArray = ref([]);
-  watch(
-    () => route.matched,
-    (value) => {
-      if (value) {
-        console.log('value.matched', value);
-        pathArray.value = value;
-      }
-    },
-  );
+  const authStore = useAuthStore();
+  const breadcrumbList = computed(() => {
+    let breadcrumbData =
+      authStore.breadcrumbListGet[route.matched[route.matched.length - 1].path] ?? [];
+    return breadcrumbData;
+  });
 </script>
 
 <style lang="scss" scoped></style>

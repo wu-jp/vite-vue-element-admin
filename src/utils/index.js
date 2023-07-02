@@ -212,3 +212,27 @@ export function getFlatMenuList(menuList) {
     ...(item.children ? getFlatMenuList(item.children) : []),
   ]);
 }
+
+/**
+ * 生成随机颜色 1: rgb(xxx,xxx,xxx) 2: #xxxxxx
+ * @returns {string}
+ */
+export function randomColor() {
+  // 方式一
+  let r = Math.floor(Math.random() * 256),
+    g = Math.floor(Math.random() * 256),
+    b = Math.floor(Math.random() * 256);
+  return `rgb(${r},${g},${b})`;
+
+  // 方式二
+  // return `#${Math.random().toString(16).substring(2, 8).toUpperCase()}`;
+}
+
+export const getAllBreadcrumbList = (menuList, parent = [], result = {}) => {
+  for (const item of menuList) {
+    result[item.path] = [...parent, item];
+    // console.log('item', item);
+    if (item.children) getAllBreadcrumbList(item.children, result[item.path], result);
+  }
+  return result;
+};

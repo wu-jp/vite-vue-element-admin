@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { useUser } from '@/store/modules/user';
-import { formatMenuData, getShowMenuList, getFlatMenuList } from '@/utils';
+import { formatMenuData, getShowMenuList, getFlatMenuList, getAllBreadcrumbList } from '@/utils';
 import { staticRouter, errorRouter } from '@/router/modules/staticRouter';
 import { createLocalStorage } from '@/utils/cache';
 const ls = createLocalStorage();
@@ -20,6 +20,7 @@ export const useAuthStore = defineStore('permission', {
     },
     showMenuListGet: (state) => getShowMenuList(state.menuList),
     flatMenuListGet: (state) => getFlatMenuList(state.menuList),
+    breadcrumbListGet: (state) => getAllBreadcrumbList(state.menuList),
   },
   actions: {
     setPermCodeList(codeList) {

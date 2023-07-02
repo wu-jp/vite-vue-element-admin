@@ -1,16 +1,21 @@
 <template>
   <div class="logo-container">
     <img class="logo-img" src="/party_2.ico" alt="" />
-    <span v-show="isCollapse" class="logo-text">WuYi Admin</span>
+    <span v-show="isCollapse" class="logo-text" :style="logoStyle">WuYi Admin</span>
   </div>
 </template>
 
 <script setup>
   import { useConfigStore } from '@/store/modules/config';
-  import { computed } from 'vue';
+  import { computed, reactive } from 'vue';
+  import { randomColor } from '@/utils';
 
   const configStore = useConfigStore();
   const isCollapse = computed(() => configStore.isCollapse);
+
+  const logoStyle = reactive({
+    color: randomColor(),
+  });
 </script>
 
 <style scoped lang="scss">
