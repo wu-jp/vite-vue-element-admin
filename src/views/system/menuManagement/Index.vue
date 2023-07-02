@@ -1,5 +1,6 @@
 <template>
   <ProTable
+    ref="proTableRef"
     v-if="showTable"
     :tree-props="{ children: '_child', hasChildren: 'hasChildren' }"
     :request-api="getTableList"
@@ -9,15 +10,8 @@
     :default-expand-all="expandTable"
   >
     <template #tableHeader="{ row }">
-      <el-button
-        type="primary"
-      >
-        添 加
-      </el-button>
-      <el-button
-        type="primary"
-        @click="changeExpand"
-      >
+      <el-button type="primary" @click="addMenuRef.showDialog()"> 添 加 </el-button>
+      <el-button type="primary" @click="changeExpand">
         {{ expandTable ? '折叠' : '展开' }}
       </el-button>
     </template>
@@ -31,32 +25,26 @@
     </template>
 
     <template #operation="{ row }">
-      <el-button
-        v-if="row.is_system !== 1"
-        text
-        bg
-        type="primary"
-        @click="handleEdit(row)"
-      >
+      <el-button v-if="row.is_system !== 1" text bg type="primary" @click="handleEdit(row)">
         编辑
       </el-button>
-      <el-button
-        v-if="row.is_system !== 1"
-        text
-        bg
-        type="danger"
-        @click="handleDelete(row)"
-      >
+      <el-button v-if="row.is_system !== 1" text bg type="danger" @click="handleDelete(row)">
         删除
       </el-button>
     </template>
   </ProTable>
+
+  <AddMenuDialog ref="addMenuRef" @updater="proTableRef.getTableList()" />
 </template>
 
 <script setup>
   import ProTable from '@/components/ProTable/index.vue';
+  import AddMenuDialog from '@/views/system/menuManagement/components/AddMenuDialog.vue';
   import { fetchMenuList } from '@/api/auth/menu';
-  import {nextTick, ref} from "vue";
+  import { nextTick, ref } from 'vue';
+
+  const proTableRef = ref();
+  const addMenuRef = ref();
 
   // 表格配置项
   const columns = [
@@ -85,15 +73,15 @@
     return fetchMenuList(params);
   };
 
-  const showTable = ref(true)
-  const expandTable = ref(false)
+  const showTable = ref(true);
+  const expandTable = ref(false);
 
   function changeExpand() {
-    expandTable.value = !expandTable.value
-    showTable.value = false
+    expandTable.value = !expandTable.value;
+    showTable.value = false;
     nextTick(() => {
-      showTable.value = true
-    })
+      showTable.value = true;
+    });
   }
 </script>
 
