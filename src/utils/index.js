@@ -110,12 +110,12 @@ const generateChildRouters = (data) => {
   for (const item of data) {
     const menu = {
       path: item.router,
-      hidden: item.hidden ? item.hidden : false,
       redirect: item.redirect ? item.redirect : '',
-      component: item.component,
+      component: item.component || '',
       meta: {
         title: item.title,
         icon: item.icon,
+        isHide: !item.show,
       },
     };
     if (item._child?.length > 0) {

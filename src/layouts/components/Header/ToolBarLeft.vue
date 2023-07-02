@@ -20,7 +20,6 @@
   import { computed } from 'vue';
   import { useConfigStore } from '@/store/modules/config';
   import { useAuthStore } from '@/store/modules/auth';
-  const emit = defineEmits(['changeAsideWidth']);
   const route = useRoute();
   const configStore = useConfigStore();
   const isCollapse = computed(() => configStore.isCollapse);

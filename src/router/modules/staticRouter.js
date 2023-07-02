@@ -3,38 +3,46 @@ export const staticRouter = [
   {
     path: '/',
     redirect: '/dashboard',
+    meta: {
+      isHide: true,
+    },
   },
   {
     path: '/layout',
     name: 'layout',
     component: () => import('@/layouts/index.vue'),
+    meta: {
+      title: '工作台',
+    },
     redirect: '/dashboard',
+    // 所以的动态路由都添加到这里
     children: [
       {
         path: '/dashboard',
         component: () => import('@/views/dashboard.vue'),
         meta: {
-          title: '工作台',
-          icon: '',
-          type: 'tab',
+          title: '数据可视化',
         },
       },
-    ]
+    ],
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login.vue'),
-    hidden: true,
+    meta: {
+      isHide: true,
+    },
   },
-]
-
+];
 
 export const errorRouter = [
   {
     path: '/404',
     name: '404',
     component: () => import('@/views/404.vue'),
-    hidden: true,
+    meta: {
+      isHide: true,
+    },
   },
-]
+];
