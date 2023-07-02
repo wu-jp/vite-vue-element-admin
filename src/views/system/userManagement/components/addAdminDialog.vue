@@ -5,6 +5,7 @@
     width="400px"
     :before-close="handleClose"
     append-to-body
+    :show-close="false"
   >
     <el-form
       ref="formRef"
@@ -61,13 +62,6 @@
       const res = await roleListApi({ page: 1, per_page: 10000 });
       ruleList.value = res.data.list;
     }
-  });
-
-  const props = defineProps({
-    roles: {
-      type: Array,
-      default: () => [],
-    },
   });
 
   const formRef = ref(null);
