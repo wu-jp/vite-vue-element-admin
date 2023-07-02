@@ -31,14 +31,11 @@ router.beforeEach(async (to, from, next) => {
       const permissionStore = useAuthStore();
       let routes = permissionStore.permCodeList;
       if (routes.length === 0) {
-        console.log('从个人信息中获取');
         // 重新添加路由
         await permissionStore.buildRoutesAction();
         await initDynamicRouter();
         next({ ...to, replace: true });
       } else {
-        console.log('直接跳转', to);
-
         const authStore = useAuthStore();
         authStore.setActiveRoute(to);
         next();

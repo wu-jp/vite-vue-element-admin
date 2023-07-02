@@ -1,5 +1,11 @@
 <template>
-  <ProTable :request-api="getTableList" :columns="columns" title="管理员列表" :pagination="true">
+  <ProTable
+    ref="proTableRef"
+    :request-api="getTableList"
+    :columns="columns"
+    title="管理员列表"
+    :pagination="true"
+  >
     <template #tableHeader="{ row }">
       <el-button type="primary" @click="addAdminDialogRef.showDialog()"> 添 加 </el-button>
     </template>
@@ -12,7 +18,7 @@
       </el-button>
     </template>
   </ProTable>
-  <AddAdminDialog ref="addAdminDialogRef" :roles="options" />
+  <AddAdminDialog ref="addAdminDialogRef" @updater="proTableRef.getTableList()" />
 </template>
 
 <script setup lang="jsx">
@@ -22,8 +28,10 @@
   import AddAdminDialog from '@/views/system/userManagement/components/addAdminDialog.vue';
   import { ref } from 'vue';
   import { roleListApi } from '@/api/modules/system/role';
+  import { handleAdminApi } from '@/api/modules/system/admin';
 
-  const addAdminDialogRef = ref(null);
+  const proTableRef = ref();
+  const addAdminDialogRef = ref();
   // 表格配置项
   const columns = [
     { prop: 'id', label: 'ID', width: 80 },
@@ -70,9 +78,14 @@
       type: 'warning',
     })
       .then(() => {
-        ElMessage({
-          type: 'success',
-          message: 'Delete completed',
+        handleAdminApi('destroy', { id: row.id }).then((res) => {
+          if (res.code === 0) {
+            ElMessage({
+              type: 'success',
+              message: '删除成功',
+            });
+            proTableRef.value.getTableList();
+          }
         });
       })
       .catch(() => {});

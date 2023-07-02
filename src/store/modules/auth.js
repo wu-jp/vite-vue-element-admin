@@ -51,8 +51,8 @@ export const useAuthStore = defineStore('permission', {
       // 转换路由
       // console.log('格式化前的路由', menu);
       const routes = formatMenuData(menu);
-      console.log('格式化后的路由', routes);
-      console.log('static error', staticRouter, errorRouter);
+      // console.log('格式化后的路由', routes);
+      // console.log('static error', staticRouter, errorRouter);
       this.setMenuList(routes);
       this.setPermCodeList(routes);
       return routes;

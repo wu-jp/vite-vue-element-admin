@@ -110,7 +110,7 @@ const generateChildRouters = (data) => {
   for (const item of data) {
     const menu = {
       path: item.router,
-      redirect: item.redirect ? item.redirect : '',
+      redirect: item.redirect || '',
       component: item.component || '',
       meta: {
         title: item.title,
@@ -121,13 +121,7 @@ const generateChildRouters = (data) => {
     if (item._child?.length > 0) {
       menu.children = [...generateChildRouters(item._child)];
     }
-    // 是否生成路由
-    if (item.route && item.route === '0') {
-      console.log(' 不生成路由 item.route：  ' + item.route);
-      console.log(' 不生成路由 item.path：  ' + item.path);
-    } else {
-      routers.push(menu);
-    }
+    routers.push(menu);
   }
   return routers;
 };
@@ -228,6 +222,13 @@ export function randomColor() {
   // return `#${Math.random().toString(16).substring(2, 8).toUpperCase()}`;
 }
 
+/**
+ * 使用递归找出所有面包屑存储到 pinia 中
+ * @param menuList 菜单列表
+ * @param parent 父级菜单
+ * @param result 处理后的结果
+ * @returns {{}}
+ */
 export const getAllBreadcrumbList = (menuList, parent = [], result = {}) => {
   for (const item of menuList) {
     result[item.path] = [...parent, item];

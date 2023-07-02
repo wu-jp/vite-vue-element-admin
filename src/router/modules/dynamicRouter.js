@@ -3,7 +3,6 @@ import router from '@/router/index';
 import { useAuthStore } from '@/store/modules/auth';
 
 const modules = import.meta.glob('@/views/**/*.vue');
-console.log(modules, 'modules');
 
 /**
  * 初始化动态路由 用 addRoute 全部添加为 Layout 组件的子组件
@@ -23,5 +22,4 @@ export const initDynamicRouter = async () => {
     }
     router.addRoute('layout', item);
   });
-  console.log(router.getRoutes());
 };

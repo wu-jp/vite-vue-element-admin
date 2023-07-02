@@ -44,7 +44,7 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
     if (!api) return;
     try {
       Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
-      console.log('合并列表请求参数', { ...state.searchInitParam, ...state.totalParam })
+      console.log('合并列表请求参数', { ...state.searchInitParam, ...state.totalParam });
       let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
 
       // let { data } = await api();
@@ -54,7 +54,8 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
       state.tableData = isPageable ? data.list : data;
 
       if (isPageable) {
-        const { pageNum, pageSize, total } = data;
+        // 兼容字段名😂 根据项目分页字段自行调整
+        const { current_page: pageNum, limit: pageSize, total } = data;
         updatePageable({ pageNum, pageSize, total });
       }
     } catch (error) {
@@ -77,7 +78,7 @@ export const useTable = (api, initParam, isPageable, dataCallBack, requestError)
         newSearchParam[key] = state.searchParam[key];
       }
     }
-    Object.assign(state.totalParam, newSearchParam, isPageable ? pageParam.value : {})
+    Object.assign(state.totalParam, newSearchParam, isPageable ? pageParam.value : {});
   };
 
   /**
