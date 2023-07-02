@@ -5,13 +5,11 @@ import { useAuthStore } from '@/store/modules/auth';
 import { initDynamicRouter } from '@/router/modules/dynamicRouter';
 
 export const useUser = defineStore('user', {
-  state: () => {
-    return {
-      token: null,
-      userInfo: null,
-      sessionTimeout: false,
-    };
-  },
+  state: () => ({
+    token: null,
+    userInfo: null,
+    sessionTimeout: false,
+  }),
   getters: {
     getUserInfo(state) {
       return state.userInfo || getAuthCache('userInfo');

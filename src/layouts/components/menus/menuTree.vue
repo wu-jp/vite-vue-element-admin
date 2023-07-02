@@ -23,7 +23,6 @@
   const props = defineProps(['menus']);
 
   const onClickMenu = (menu) => {
-    console.log('menu', menu);
     if (menu.path) {
       router.push(menu.path);
     }

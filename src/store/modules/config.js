@@ -1,3 +1,15 @@
 import { defineStore } from 'pinia';
 
-export const useConfig = defineStore('config', {});
+export const useConfigStore = defineStore('config', {
+  state: () => ({
+    // 折叠菜单
+    isCollapse: false,
+  }),
+  getters: {},
+  actions: {
+    setConfigState(...args) {
+      console.log(args);
+      this.$patch({ [args[0]]: args[1] });
+    },
+  },
+});
