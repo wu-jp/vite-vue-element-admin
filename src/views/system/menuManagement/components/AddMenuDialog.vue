@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="dialogVisible"
-    title="授权"
+    title="菜单"
     width="700px"
     :before-close="handleClose"
     append-to-body
@@ -10,19 +10,20 @@
     <el-form :model="formData" ref="formRef" :rules="rules" label-width="100px">
       <el-form-item label="菜单类型:" prop="type">
         <el-radio-group v-model="formData.type" size="large">
-          <el-radio-button :value="1" label="目录" />
-          <el-radio-button :value="2" label="菜单" />
-          <el-radio-button :value="3" label="按钮/权限" />
+          <el-radio-button :label="1">目录</el-radio-button>
+          <el-radio-button :label="2">菜单</el-radio-button>
+          <el-radio-button :label="3">按钮/权限</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="菜单名称:" prop="title">
         <el-input v-model="formData.title" placeholder="请输入" clearable />
       </el-form-item>
-      <el-form-item label="上级菜单:" prop="id_str">
+      <el-form-item v-if="formData.type !== 1" label="上级菜单:" prop="id_str">
         <el-cascader
           v-model="formData.id_str"
           placeholder="请选择"
           clearable
+          :options="menuList"
           :props="{
             multiple: false,
             checkStrictly: true,
@@ -32,19 +33,19 @@
           }"
         />
       </el-form-item>
-      <el-form-item label="菜单路径:" prop="router">
+      <el-form-item v-if="formData.type !== 3" label="菜单路径:" prop="router">
         <el-input v-model="formData.router" placeholder="请输入" clearable />
       </el-form-item>
-      <el-form-item label="前端组件:" prop="component">
+      <el-form-item v-if="formData.type === 2" label="前端组件:" prop="component">
         <el-input v-model="formData.component" placeholder="请输入" clearable />
       </el-form-item>
-      <el-form-item label="权限标识:" prop="identity">
+      <el-form-item v-if="formData.type === 3" label="权限标识:" prop="identity">
         <el-input v-model="formData.identity" placeholder="请输入" clearable />
       </el-form-item>
-      <el-form-item label="接口请求方式:" prop="method">
+      <el-form-item v-if="formData.type !== 1" label="接口请求方式:" prop="method">
         <el-radio-group v-model="formData.method" size="large">
-          <el-radio-button :value="1" label="GET" />
-          <el-radio-button :value="2" label="POST" />
+          <el-radio-button :label="1">GET</el-radio-button>
+          <el-radio-button :label="2">POST</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item label="菜单鉴权:">
@@ -82,9 +83,10 @@
 </template>
 
 <script setup>
-  import { reactive, ref } from 'vue';
+  import { onMounted, reactive, ref } from 'vue';
   import { handleRoleApi } from '@/api/modules/system/role';
   import { ElMessage } from 'element-plus';
+  import { handleMenuApi, menuListApi } from '@/api/modules/system/menu';
 
   const emit = defineEmits(['updater']);
 
@@ -111,6 +113,17 @@
     type: [],
   });
 
+  onMounted(() => {
+    getMenuList();
+  });
+  const menuList = ref([]);
+  const getMenuList = () => {
+    menuListApi().then((res) => {
+      console.log('菜单列表', res);
+      menuList.value = res.data;
+    });
+  };
+
   const showDialog = (row) => {
     dialogVisible.value = true;
   };
@@ -118,6 +131,10 @@
   const resetForm = (formEl) => {
     if (!formEl) return;
     formEl.resetFields();
+    formData.show = '';
+    formData.enable_log = '';
+    formData.permission = '';
+    formData.auth = '';
     dialogVisible.value = false;
   };
 
@@ -125,10 +142,22 @@
     if (!formEl) return;
     await formEl.validate((valid, fields) => {
       if (valid) {
-        const type = formData.value.id ? 'update' : 'store';
-        handleRoleApi(type, formData.value).then((res) => {
-          ElMessage.success(formData.value.id ? '更新成功' : '创建成功');
+        // console.log(formData);
+        const params = {
+          ...formData,
+          parent_id: formData.id_str ? formData.id_str[formData.id_str.length - 1] : '',
+          show: formData.show ? 1 : 0,
+          enable_log: formData.enable_log ? 1 : 0,
+          permission: formData.permission ? 1 : 0,
+          auth: formData.auth ? 1 : 0,
+        };
+        console.log(params);
+
+        const type = formData.id ? 'update' : 'store';
+        handleMenuApi(type, params).then((res) => {
+          ElMessage.success(formData.id ? '更新成功' : '创建成功');
           emit('updater');
+          getMenuList();
           resetForm(formRef.value);
         });
       } else {

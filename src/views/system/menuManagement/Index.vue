@@ -42,6 +42,9 @@
   import AddMenuDialog from '@/views/system/menuManagement/components/AddMenuDialog.vue';
   import { fetchMenuList } from '@/api/auth/menu';
   import { nextTick, ref } from 'vue';
+  import { ElMessage, ElMessageBox } from 'element-plus';
+  import { handleRoleApi } from '@/api/modules/system/role';
+  import { handleMenuApi } from '@/api/modules/system/menu';
 
   const proTableRef = ref();
   const addMenuRef = ref();
@@ -83,6 +86,28 @@
       showTable.value = true;
     });
   }
+  const handleEdit = (row) => {
+    addMenuRef.value.showDialog(row);
+  };
+  const handleDelete = (row) => {
+    ElMessageBox.confirm('此操作将永久删除选中数据，是否继续？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    })
+      .then(() => {
+        handleMenuApi('destroy', { id: row.id }).then((res) => {
+          if (res.code === 0) {
+            ElMessage({
+              type: 'success',
+              message: '删除成功',
+            });
+            proTableRef.value.getTableList();
+          }
+        });
+      })
+      .catch(() => {});
+  };
 </script>
 
 <style lang="scss" scoped></style>
