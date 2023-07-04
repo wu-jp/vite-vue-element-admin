@@ -6,6 +6,7 @@
     :before-close="handleClose"
     append-to-body
     :show-close="false"
+    :destroy-on-close="true"
   >
     <el-form :model="formData" ref="formRef" :rules="rules" label-width="100px">
       <el-form-item label="菜单类型:" prop="type">
@@ -83,7 +84,7 @@
 </template>
 
 <script setup>
-  import { onMounted, reactive, ref } from 'vue';
+  import { nextTick, onMounted, reactive, ref } from 'vue';
   import { handleRoleApi } from '@/api/modules/system/role';
   import { ElMessage } from 'element-plus';
   import { handleMenuApi, menuListApi } from '@/api/modules/system/menu';
@@ -93,21 +94,21 @@
   const formRef = ref();
   const dialogVisible = ref(false);
   const handleClose = () => {};
-  const formData = reactive({
-    type: 1,
+  let formData = reactive({
     title: '',
     id_str: '',
     router: '',
     component: '',
     identity: '',
-    method: '',
-    auth: '',
-    permission: '',
-    enable_log: '',
-    show: '',
+    method: 1,
+    auth: true,
+    permission: true,
+    enable_log: true,
+    show: true,
     sort: '',
-    is_router_menu: '',
+    is_router_menu: false,
     enable_cache: '',
+    type: 1,
   });
   const rules = reactive({
     type: [],
@@ -126,15 +127,46 @@
 
   const showDialog = (row) => {
     dialogVisible.value = true;
+    console.log('row', row);
+    if (row) {
+      nextTick(() => {
+        formData.id = row.id;
+        formData.title = row.title;
+        formData.type = row.type;
+        formData.id_str = row.id_str;
+        formData.router = row.router;
+        formData.component = row.component;
+        formData.identity = row.identity;
+        formData.method = row.method;
+        formData.sort = row.sort;
+        formData.is_router_menu = row.is_router_menu;
+        formData.enable_cache = row.enable_cache;
+        formData.permission = !!row.permission;
+        formData.enable_log = !!row.enable_log;
+        formData.show = !!row.show;
+        formData.auth = !!row.auth;
+      });
+    }
   };
 
   const resetForm = (formEl) => {
     if (!formEl) return;
     formEl.resetFields();
-    formData.show = '';
-    formData.enable_log = '';
-    formData.permission = '';
-    formData.auth = '';
+    formData.title = '';
+    formData.type = 1;
+    formData.id_str = '';
+    formData.router = '';
+    formData.component = '';
+    formData.identity = '';
+    formData.method = 1;
+    formData.sort = '';
+    formData.is_router_menu = false;
+    formData.enable_cache = '';
+    formData.show = true;
+    formData.enable_log = true;
+    formData.permission = true;
+    formData.auth = true;
+    delete formData.id;
     dialogVisible.value = false;
   };
 
@@ -142,7 +174,7 @@
     if (!formEl) return;
     await formEl.validate((valid, fields) => {
       if (valid) {
-        // console.log(formData);
+        console.log(formData);
         const params = {
           ...formData,
           parent_id: formData.id_str ? formData.id_str[formData.id_str.length - 1] : '',
