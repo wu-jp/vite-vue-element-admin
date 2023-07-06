@@ -1,21 +1,19 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 
-import '@/assets/iconfont/iconfont.scss';
-import '@/assets/fonts/font.scss';
+// import 'normalize.css/normalize.css';
 import '@/styles/reset.scss';
 import '@/styles/common.scss';
-import '@/styles/element.scss';
-import '@/styles/index.scss';
-import '@/styles/theme/element-dark.scss';
-
-import 'element-plus/theme-chalk/dark/css-vars.css';
+import '@/assets/iconfont/iconfont.scss';
+import '@/assets/fonts/font.scss';
 import 'element-plus/dist/index.css';
+import 'element-plus/theme-chalk/dark/css-vars.css';
+import '@/styles/theme/element-dark.scss';
+import '@/styles/element.scss';
 
+import ElementPlus from 'element-plus';
 import router from './router/index.js';
 import store from './store/index.js';
-import 'normalize.css/normalize.css';
-import ElementPlus from 'element-plus';
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue';
 import directives from '@/directives';

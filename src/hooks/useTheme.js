@@ -41,14 +41,16 @@ export const useTheme = () => {
     configStore.setConfigState('primary', val);
   };
 
-  // 设置侧边栏样式
+  // 设置侧边栏样式 ==> light、inverted、dark
   const setAsideTheme = () => {
     // 默认所有侧边栏为 light 模式
     let type = 'light';
 
     // 侧边栏 dark 模式
     if (isDark.value) type = 'dark';
+    console.log(type);
     const theme = asideTheme[type];
+    console.log(theme);
     for (const [key, value] of Object.entries(theme)) {
       document.documentElement.style.setProperty(key, value);
     }

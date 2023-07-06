@@ -1,22 +1,23 @@
 <template>
-  <el-container class="layout-container">
-    <el-aside :width="isCollapse ? '260px' : '64px'" class="layout-aside-default">
-      <Logo />
-      <el-scrollbar class="menus-scrollbar">
-        <el-menu
-          :default-active="activeMenu"
-          :collapse="!isCollapse"
-          active-text-color="#B33771"
-          background-color="#fff"
-          text-color="#333"
-          :collapse-transition="false"
-        >
-          <MenuTree :menus="menu" />
-        </el-menu>
-      </el-scrollbar>
+  <el-container class="layout">
+    <el-aside>
+      <div class="aside-box" :style="{ width: isCollapse ? '260px' : '64px' }">
+        <Logo />
+        <el-scrollbar>
+          <el-menu
+            :default-active="activeMenu"
+            :collapse="!isCollapse"
+            :router="false"
+            :unique-opened="true"
+            :collapse-transition="false"
+          >
+            <MenuTree :menus="menu" />
+          </el-menu>
+        </el-scrollbar>
+      </div>
     </el-aside>
-    <el-container class="content-wrapper">
-      <el-header class="header-container">
+    <el-container>
+      <el-header>
         <ToolBarLeft />
         <ToolBarRight />
       </el-header>
@@ -97,41 +98,8 @@
 </script>
 
 <style scoped lang="scss">
-  @import 'src/styles/variables.scss';
-
-  .el-menu-vertical-demo {
-    border: none;
-  }
-
-  .menus-scrollbar {
-    height: calc(100vh - 50px);
-    background-color: #fff;
-  }
-
-  .header-container {
-    background-color: #fff;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .layout-container {
-    width: 100%;
-    height: 100%;
-  }
-  .content-wrapper {
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-  }
-
-  .el-main {
-    padding: 0;
-  }
-
-  .layout-aside-default {
-    transition: width 0.3s ease;
+  @import './index.scss';
+  .layout {
+    min-width: 730px;
   }
 </style>
