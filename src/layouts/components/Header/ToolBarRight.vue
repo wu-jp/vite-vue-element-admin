@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-switch v-model="configStore.isDark" @change="switchDark" />
     <el-dropdown ref="dropdown" trigger="contextmenu">
       <el-avatar :size="40" :src="circleUrl" @click="showClick" />
       <template #dropdown>
@@ -17,6 +18,8 @@
   import { useUser } from '@/store/modules/user';
   import { ElMessage } from 'element-plus';
   import { useRouter } from 'vue-router';
+  import { useConfigStore } from '@/store/modules/config';
+  import { useTheme } from '@/hooks/useTheme';
 
   const router = useRouter();
 
@@ -27,6 +30,9 @@
   const showClick = () => {
     dropdown.value.handleOpen();
   };
+
+  const { switchDark } = useTheme();
+  const configStore = useConfigStore();
 
   const logout = () => {
     console.log('退出登录');

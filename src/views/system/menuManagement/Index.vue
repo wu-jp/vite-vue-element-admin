@@ -43,7 +43,6 @@
   import { fetchMenuList } from '@/api/auth/menu';
   import { nextTick, ref } from 'vue';
   import { ElMessage, ElMessageBox } from 'element-plus';
-  import { handleRoleApi } from '@/api/modules/system/role';
   import { handleMenuApi } from '@/api/modules/system/menu';
 
   const proTableRef = ref();

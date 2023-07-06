@@ -4,7 +4,6 @@
       <Logo />
       <el-scrollbar class="menus-scrollbar">
         <el-menu
-          class="el-menu-vertical-demo"
           :default-active="activeMenu"
           :collapse="!isCollapse"
           active-text-color="#B33771"
