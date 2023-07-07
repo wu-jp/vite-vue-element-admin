@@ -6,8 +6,8 @@ import { createLocalStorage } from '@/utils/cache';
 const ls = createLocalStorage();
 
 // 菜单json文件
-import menuData from '@/assets/json/authMenuList.json'
-import {mockMenuListApi} from "../../api/modules/common";
+import menuData from '@/assets/json/authMenuList.json';
+import { mockMenuListApi } from '../../api/modules/common';
 
 export const useAuthStore = defineStore('permission', {
   state: () => ({
@@ -55,10 +55,10 @@ export const useAuthStore = defineStore('permission', {
       // const routes = formatMenuData(menu);
       // this.menuList = routes
 
-
-      // 模拟路由 ? 为啥
-      const {data} = mockMenuListApi()
-      this.menuList = data
+      // 模拟路由
+      const { data } = mockMenuListApi();
+      console.log('data', data);
+      this.menuList = data;
     },
   },
 });

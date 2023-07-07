@@ -28,11 +28,11 @@ router.beforeEach(async (to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
-      const permissionStore = useAuthStore();
-      let routes = permissionStore.permCodeList;
+      const authStore = useAuthStore();
+      let routes = authStore.menuList;
       if (routes.length === 0) {
         // 重新添加路由
-        await permissionStore.buildRoutesAction();
+        await authStore.buildRoutesAction();
         await initDynamicRouter();
         next({ ...to, replace: true });
       } else {

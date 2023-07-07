@@ -20,7 +20,7 @@
 
 <style scoped lang="scss">
   .logo-container {
-    height: 50px;
+    height: 55px;
     background: #30336b;
     display: flex;
     align-items: center;

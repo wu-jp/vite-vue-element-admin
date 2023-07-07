@@ -1,10 +1,7 @@
 <template>
   <el-container class="layout">
     <el-aside>
-      <div
-        class="aside-box"
-        :style="{ width: isCollapse ? '260px' : '64px' }"
-      >
+      <div class="aside-box" :style="{ width: isCollapse ? '260px' : '64px' }">
         <Logo />
         <el-scrollbar>
           <el-menu
@@ -42,7 +39,7 @@
   import ToolBarRight from './components/Header/ToolBarRight.vue';
   import Main from './components/Main/index.vue';
   import MenuTree from './components/menus/menuTree.vue';
-  import ThemeDrawer from '@/layouts/components/ThemeDrawer/index.vue'
+  import ThemeDrawer from '@/layouts/components/ThemeDrawer/index.vue';
 
   const router = useRouter();
   const route = useRoute();
@@ -98,7 +95,6 @@
     console.log(parent);
     return menuRule;
   };
-
 </script>
 
 <style scoped lang="scss">
