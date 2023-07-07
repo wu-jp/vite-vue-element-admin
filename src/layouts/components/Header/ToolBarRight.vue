@@ -1,11 +1,27 @@
 <template>
   <div>
-    <el-switch v-model="configStore.isDark" @change="switchDark" />
-    <el-dropdown ref="dropdown" trigger="contextmenu">
-      <el-avatar :size="40" :src="circleUrl" @click="showClick" />
+    <IconPalette
+      style="font-size: 18px"
+      @click="openThemeDrawer"
+    />
+
+    <el-dropdown
+      ref="dropdown"
+      trigger="contextmenu"
+    >
+      <el-avatar
+        :size="40"
+        :src="circleUrl"
+        @click="showClick"
+      />
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item divided @click="logout"> 退出登录 </el-dropdown-item>
+          <el-dropdown-item
+            divided
+            @click="logout"
+          >
+            退出登录
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -18,8 +34,8 @@
   import { useUser } from '@/store/modules/user';
   import { ElMessage } from 'element-plus';
   import { useRouter } from 'vue-router';
-  import { useConfigStore } from '@/store/modules/config';
-  import { useTheme } from '@/hooks/useTheme';
+  import mittBus from "@/utils/mittBus";
+  import IconPalette from '~icons/bxs/palette'
 
   const router = useRouter();
 
@@ -31,11 +47,8 @@
     dropdown.value.handleOpen();
   };
 
-  const { switchDark } = useTheme();
-  const configStore = useConfigStore();
 
   const logout = () => {
-    console.log('退出登录');
     userStore.logout().then(() => {
       ElMessage({
         message: '退出成功',
@@ -45,6 +58,11 @@
       router.push('/login');
     });
   };
+
+  // 开打主题设置
+  const openThemeDrawer = () => {
+    mittBus.emit('openThemeDrawer')
+  }
 </script>
 
 <style scoped></style>

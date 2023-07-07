@@ -16,6 +16,7 @@
     "echarts-liquidfill": "^3.1.0",
     "element-plus": "^2.3.7",
     "lodash-es": "^4.17.21",
+    "mitt": "^3.0.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.2.0",
@@ -32,6 +33,7 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
+    "@iconify-json/bxs": "^1.1.6",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "autoprefixer": "^10.4.14",
@@ -42,6 +44,7 @@
     "postcss": "^8.4.21",
     "prettier": "2.8.4",
     "sass": "^1.51.0",
+    "unplugin-icons": "^0.16.3",
     "vite": "^4.3.9",
     "vue-eslint-parser": "^9.1.0"
   }

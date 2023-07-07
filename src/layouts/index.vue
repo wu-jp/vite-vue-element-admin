@@ -1,7 +1,10 @@
 <template>
   <el-container class="layout">
     <el-aside>
-      <div class="aside-box" :style="{ width: isCollapse ? '260px' : '64px' }">
+      <div
+        class="aside-box"
+        :style="{ width: isCollapse ? '260px' : '64px' }"
+      >
         <Logo />
         <el-scrollbar>
           <el-menu
@@ -24,6 +27,9 @@
       <Main />
     </el-container>
   </el-container>
+
+  <!--主题设置-->
+  <ThemeDrawer />
 </template>
 
 <script setup>
@@ -37,6 +43,7 @@
   import Main from './components/Main/index.vue';
   import MenuTree from './components/menus/menuTree.vue';
   import menuData from '@/assets/menus.json';
+  import ThemeDrawer from '@/layouts/components/ThemeDrawer/index.vue'
 
   const router = useRouter();
   const route = useRoute();
