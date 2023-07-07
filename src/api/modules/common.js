@@ -1,4 +1,11 @@
 import http from '@/api'
+import authMenuList from "@/assets/json/authMenuList.json";
+import authButtonList from "@/assets/json/authButtonList.json";
+
+// 模拟请求菜单列表
+export const mockMenuListApi = () => authMenuList
+// 模拟请求按钮列表
+export const mockButtonListApi = () => authButtonList
 
 // 登录
 export const loginApi = params => http.post('/admin/login/index', params)

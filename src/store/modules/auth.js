@@ -5,6 +5,10 @@ import { staticRouter, errorRouter } from '@/router/modules/staticRouter';
 import { createLocalStorage } from '@/utils/cache';
 const ls = createLocalStorage();
 
+// 菜单json文件
+import menuData from '@/assets/json/authMenuList.json'
+import {mockMenuListApi} from "../../api/modules/common";
+
 export const useAuthStore = defineStore('permission', {
   state: () => ({
     // 按钮权限列表
@@ -46,16 +50,15 @@ export const useAuthStore = defineStore('permission', {
     // 构建路由
     async buildRoutesAction() {
       const userStore = useUser();
-      // 个人信息的路由
-      const { menu } = userStore.getUserInfo;
-      // 转换路由
-      // console.log('格式化前的路由', menu);
-      const routes = formatMenuData(menu);
-      // console.log('格式化后的路由', routes);
-      // console.log('static error', staticRouter, errorRouter);
-      this.setMenuList(routes);
-      this.setPermCodeList(routes);
-      return routes;
+      // 个人信息的路由菜单 && 格式化路由
+      // const { menu } = userStore.getUserInfo;
+      // const routes = formatMenuData(menu);
+      // this.menuList = routes
+
+
+      // 模拟路由 ? 为啥
+      const {data} = mockMenuListApi()
+      this.menuList = data
     },
   },
 });
