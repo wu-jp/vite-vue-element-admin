@@ -1,27 +1,15 @@
 <template>
-  <div>
-    <IconPalette
-      style="font-size: 18px"
-      @click="openThemeDrawer"
-    />
-
-    <el-dropdown
-      ref="dropdown"
-      trigger="contextmenu"
-    >
-      <el-avatar
-        :size="40"
-        :src="circleUrl"
-        @click="showClick"
-      />
+  <div class="tool-bar-ri">
+    <div class="header-icon">
+      <AssemblySize />
+      <ChangeTheme />
+      <Fullscreen />
+    </div>
+    <el-dropdown ref="dropdown" trigger="contextmenu">
+      <el-avatar :size="40" :src="circleUrl" @click="showClick" />
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            divided
-            @click="logout"
-          >
-            退出登录
-          </el-dropdown-item>
+          <el-dropdown-item divided @click="logout"> 退出登录 </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -29,13 +17,14 @@
 </template>
 
 <script setup>
-  import circleUrl from '@/assets/avatar.png';
   import { ref } from 'vue';
+  import ChangeTheme from '@/layouts/components/Header/components/ChangeTheme.vue';
+  import AssemblySize from '@/layouts/components/Header/components/AssemblySize.vue';
+  import Fullscreen from '@/layouts/components/Header/components/Fullscreen.vue';
+  import circleUrl from '@/assets/avatar.png';
   import { useUser } from '@/store/modules/user';
   import { ElMessage } from 'element-plus';
   import { useRouter } from 'vue-router';
-  import mittBus from "@/utils/mittBus";
-  import IconPalette from '~icons/bxs/palette'
 
   const router = useRouter();
 
@@ -47,7 +36,6 @@
     dropdown.value.handleOpen();
   };
 
-
   const logout = () => {
     userStore.logout().then(() => {
       ElMessage({
@@ -58,11 +46,23 @@
       router.push('/login');
     });
   };
-
-  // 开打主题设置
-  const openThemeDrawer = () => {
-    mittBus.emit('openThemeDrawer')
-  }
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+  .tool-bar-ri {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .header-icon {
+      display: flex;
+      align-items: center;
+      & > * {
+        margin-right: 20px;
+      }
+    }
+    .username {
+      margin: 0 20px;
+      font-size: 15px;
+    }
+  }
+</style>
