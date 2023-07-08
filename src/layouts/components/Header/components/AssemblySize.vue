@@ -1,14 +1,19 @@
 <template>
   <div>
-    <el-dropdown trigger="click">
+    <el-dropdown trigger="click" @command="setAssemblySize">
       <span class="el-dropdown-link">
         <IconCategory style="font-size: 20px" />
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item disabled>默认</el-dropdown-item>
-          <el-dropdown-item>大型</el-dropdown-item>
-          <el-dropdown-item>小型</el-dropdown-item>
+          <el-dropdown-item
+            v-for="item in assemblySizeList"
+            :key="item.value"
+            :command="item.value"
+            :disabled="assemblySize === item.value"
+          >
+            {{ item.label }}
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -17,6 +22,22 @@
 
 <script setup>
   import IconCategory from '~icons/bxs/category';
+  import { useConfigStore } from '@/store/modules/config';
+  import { computed } from 'vue';
+
+  const configStore = useConfigStore();
+  const assemblySize = computed(() => configStore.assemblySize);
+
+  const assemblySizeList = [
+    { label: '默认', value: 'default' },
+    { label: '大型', value: 'large' },
+    { label: '小型', value: 'small' },
+  ];
+
+  const setAssemblySize = (item) => {
+    if (item === assemblySize.value) return;
+    configStore.setConfigState('assemblySize', item);
+  };
 </script>
 
 <style lang="scss" scoped></style>

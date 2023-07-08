@@ -13,10 +13,12 @@
     if (configStore.language == 'zh') return zhCn;
     if (configStore.language == 'en') return en;
   });
+
+  const assemblySize = computed(() => configStore.assemblySize);
 </script>
 
 <template>
-  <el-config-provider :locale="locale">
+  <el-config-provider :locale="locale" :size="assemblySize">
     <router-view />
   </el-config-provider>
 </template>

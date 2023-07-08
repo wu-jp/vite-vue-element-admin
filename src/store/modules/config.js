@@ -8,6 +8,7 @@ export const useConfigStore = defineStore('config', {
     isDark: false,
     primary: '#30336b',
     language: 'zh',
+    assemblySize: 'default',
   }),
   getters: {},
   actions: {
