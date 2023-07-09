@@ -6,7 +6,7 @@ export const useConfigStore = defineStore('config', {
     // 折叠菜单
     isCollapse: true,
     isDark: false,
-    primary: '#30336b',
+    primary: '#30336b', // 主题色
     language: 'zh',
     assemblySize: 'default',
   }),

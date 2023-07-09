@@ -2,6 +2,7 @@
   <div class="tool-bar-ri">
     <div class="header-icon">
       <AssemblySize />
+      <Language />
       <ChangeTheme />
       <Fullscreen />
     </div>
@@ -21,6 +22,7 @@
   import ChangeTheme from '@/layouts/components/Header/components/ChangeTheme.vue';
   import AssemblySize from '@/layouts/components/Header/components/AssemblySize.vue';
   import Fullscreen from '@/layouts/components/Header/components/Fullscreen.vue';
+  import Language from '@/layouts/components/Header/components/Language.vue';
   import circleUrl from '@/assets/avatar.png';
   import { useUser } from '@/store/modules/user';
   import { ElMessage } from 'element-plus';

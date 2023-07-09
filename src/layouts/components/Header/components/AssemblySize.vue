@@ -2,7 +2,7 @@
   <div>
     <el-dropdown trigger="click" @command="setAssemblySize">
       <span class="el-dropdown-link">
-        <IconCategory style="font-size: 20px" />
+        <IconLayout2Fill style="font-size: 20px" />
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-  import IconCategory from '~icons/bxs/category';
+  import IconLayout2Fill from '~icons/ri/layout-2-fill';
   import { useConfigStore } from '@/store/modules/config';
   import { computed } from 'vue';
 
