@@ -1,9 +1,9 @@
 <template>
   <div style="display: flex; align-items: center">
-    <el-icon v-if="!isCollapse" :size="20" color="#30336b" @click="changeCollapse">
+    <el-icon v-if="!isCollapse" :size="20" @click="changeCollapse">
       <Expand />
     </el-icon>
-    <el-icon v-else :size="20" color="#30336b" @click="changeCollapse">
+    <el-icon v-else :size="20" @click="changeCollapse">
       <Fold />
     </el-icon>
 
