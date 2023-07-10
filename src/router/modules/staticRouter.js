@@ -10,7 +10,10 @@ export const staticRouter = [
   {
     path: '/layout',
     name: 'layout',
-    component: () => import('@/layouts/index.vue'),
+    component: () => import('@/layouts/LayoutVertical/index.vue'),
+    // component: () => import('@/layouts/LayoutTransverse/index.vue'),
+    // component: () => import('@/layouts/LayoutClassic/index.vue'),
+    // component: () => import('@/layouts/LayoutColumns/index.vue'),
     meta: {
       title: '工作台',
     },

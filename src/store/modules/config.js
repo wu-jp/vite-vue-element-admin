@@ -9,6 +9,7 @@ export const useConfigStore = defineStore('config', {
     primary: '#30336b', // 主题色
     language: 'zh',
     assemblySize: 'default',
+    layout: 'default', // classic经典  default默认  vertical垂直  transverse横向
   }),
   getters: {},
   actions: {

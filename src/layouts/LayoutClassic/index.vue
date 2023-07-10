@@ -1,27 +1,29 @@
 <template>
   <el-container class="layout">
-    <el-aside>
-      <div class="aside-box" :style="{ width: isCollapse ? '260px' : '64px' }">
-        <Logo />
-        <el-scrollbar>
-          <el-menu
-            :default-active="activeMenu"
-            :collapse="!isCollapse"
-            :router="false"
-            :unique-opened="true"
-            :collapse-transition="false"
-          >
-            <MenuTree :menus="menu" />
-          </el-menu>
-        </el-scrollbar>
-      </div>
-    </el-aside>
-    <el-container>
-      <el-header>
-        <ToolBarLeft />
-        <ToolBarRight />
-      </el-header>
-      <Main />
+    <el-header>
+      <Logo />
+      <ToolBarLeft />
+      <ToolBarRight />
+    </el-header>
+    <el-container class="classic-content">
+      <el-aside>
+        <div class="aside-box" :style="{ width: isCollapse ? '260px' : '64px' }">
+          <el-scrollbar>
+            <el-menu
+              :default-active="activeMenu"
+              :collapse="!isCollapse"
+              :router="false"
+              :unique-opened="true"
+              :collapse-transition="false"
+            >
+              <MenuTree :menus="menu" />
+            </el-menu>
+          </el-scrollbar>
+        </div>
+      </el-aside>
+      <el-container class="classic-main">
+        <Main />
+      </el-container>
     </el-container>
   </el-container>
 
@@ -34,11 +36,11 @@
   import { useRouter, useRoute } from 'vue-router';
   import { useAuthStore } from '@/store/modules/auth';
   import { useConfigStore } from '@/store/modules/config';
-  import Logo from './components/Logo/index.vue';
-  import ToolBarLeft from './components/Header/ToolBarLeft.vue';
-  import ToolBarRight from './components/Header/ToolBarRight.vue';
-  import Main from './components/Main/index.vue';
-  import MenuTree from './components/menus/menuTree.vue';
+  import Logo from '../components/Logo/index.vue';
+  import ToolBarLeft from '../components/Header/ToolBarLeft.vue';
+  import ToolBarRight from '../components/Header/ToolBarRight.vue';
+  import Main from '../components/Main/index.vue';
+  import MenuTree from '../components/menus/menuTree.vue';
   import ThemeDrawer from '@/layouts/components/ThemeDrawer/index.vue';
 
   const router = useRouter();
@@ -98,7 +100,7 @@
 </script>
 
 <style scoped lang="scss">
-  @import './index.scss';
+  @import 'index';
   .layout {
     min-width: 730px;
   }
