@@ -1,11 +1,8 @@
 <template>
   <el-container class="layout">
     <el-header>
-      <!--<el-scrollbar></el-scrollbar>-->
-
-      <!--<ToolBarLeft />-->
       <Logo />
-      <Collapse />
+      <Collapse style="margin: 0 15px 0 0" />
       <div class="split-list">
         <div
           v-for="item in menu"
@@ -43,9 +40,6 @@
       <Main />
     </el-container>
   </el-container>
-
-  <!--主题设置-->
-  <ThemeDrawer />
 </template>
 
 <script setup>
@@ -59,7 +53,6 @@
   import ToolBarLeft from '../components/Header/ToolBarLeft.vue';
   import Main from '../components/Main/index.vue';
   import MenuTree from '../components/menus/menuTree.vue';
-  import ThemeDrawer from '@/layouts/components/ThemeDrawer/index.vue';
 
   const router = useRouter();
   const route = useRoute();

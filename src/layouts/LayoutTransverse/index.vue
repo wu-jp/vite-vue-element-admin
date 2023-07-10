@@ -31,9 +31,6 @@
     </el-header>
     <Main />
   </el-container>
-
-  <!--主题设置-->
-  <ThemeDrawer />
 </template>
 
 <script setup>
@@ -41,7 +38,6 @@
   import ToolBarRight from '@/layouts/components/Header/ToolBarRight.vue';
   import Logo from '@/layouts/components/Logo/index.vue';
   import MenuTree from '@/layouts/components/menus/menuTree.vue';
-  import ThemeDrawer from '@/layouts/components/ThemeDrawer/index.vue';
   import { useAuthStore } from '@/store/modules/auth';
   import { computed } from 'vue';
   import { useRoute, useRouter } from 'vue-router';

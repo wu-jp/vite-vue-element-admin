@@ -6,9 +6,9 @@
   import { storeToRefs } from 'pinia';
   import IconCheckboxCircleFill from '~icons/ri/checkbox-circle-fill'; // 选中的布局标签
 
-  const { switchDark, changePrimary } = useTheme();
+  const { switchDark, changePrimary, setAsideTheme } = useTheme();
   const configStore = useConfigStore();
-  const { primary } = storeToRefs(configStore);
+  const { primary, layout } = storeToRefs(configStore);
 
   const drawerVisible = ref(false);
   const handleClose = () => {
@@ -31,6 +31,11 @@
     '#1d3557',
     '#fb6f92',
   ]);
+
+  const setLayout = (val) => {
+    configStore.setConfigState('layout', val);
+    setAsideTheme();
+  };
 </script>
 <template>
   <el-drawer
@@ -50,26 +55,36 @@
           justify-content: space-around;
         "
       >
-        <div class="mini-layout1">
+        <div class="mini-layout1" @click="setLayout('classic')">
           <div class="layout-top"></div>
           <div class="layout-other">
             <div class="layout-menu"></div>
             <div class="layout-main"></div>
           </div>
+          <IconCheckboxCircleFill v-if="layout === 'classic'" />
         </div>
-        <div class="mini-layout1">
+        <div class="mini-layout1" @click="setLayout('columns')">
           <div class="layout-top"></div>
           <div class="layout-other">
             <div class="layout-menu"></div>
             <div class="layout-main"></div>
           </div>
+          <IconCheckboxCircleFill v-if="layout === 'columns'" />
         </div>
-        <div class="mini-layout1">
+        <div class="mini-layout1" @click="setLayout('vertical')">
           <div class="layout-top"></div>
           <div class="layout-other">
             <div class="layout-menu"></div>
             <div class="layout-main"></div>
           </div>
+          <IconCheckboxCircleFill v-if="layout === 'vertical'" />
+        </div>
+        <div class="mini-layout1" @click="setLayout('transverse')">
+          <div class="layout-top"></div>
+          <div class="layout-other">
+            <div class="layout-main"></div>
+          </div>
+          <IconCheckboxCircleFill v-if="layout === 'transverse'" />
         </div>
       </div>
     </div>

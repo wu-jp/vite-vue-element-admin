@@ -24,9 +24,6 @@
       <Main />
     </el-container>
   </el-container>
-
-  <!--主题设置-->
-  <ThemeDrawer />
 </template>
 
 <script setup>
@@ -39,7 +36,6 @@
   import ToolBarRight from '../components/Header/ToolBarRight.vue';
   import Main from '../components/Main/index.vue';
   import MenuTree from '../components/menus/menuTree.vue';
-  import ThemeDrawer from '@/layouts/components/ThemeDrawer/index.vue';
 
   const router = useRouter();
   const route = useRoute();
