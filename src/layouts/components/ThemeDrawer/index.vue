@@ -61,30 +61,29 @@
             <div class="layout-menu"></div>
             <div class="layout-main"></div>
           </div>
-          <IconCheckboxCircleFill v-if="layout === 'classic'" />
+          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'classic'" />
         </div>
-        <div class="mini-layout1" @click="setLayout('columns')">
-          <div class="layout-top"></div>
+        <div class="mini-layout1 layout-vertical" @click="setLayout('vertical')">
+          <div class="layout-menu"></div>
           <div class="layout-other">
-            <div class="layout-menu"></div>
+            <div class="layout-top"></div>
             <div class="layout-main"></div>
           </div>
-          <IconCheckboxCircleFill v-if="layout === 'columns'" />
+          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'vertical'" />
         </div>
-        <div class="mini-layout1" @click="setLayout('vertical')">
+        <div class="mini-layout1 layout-columns" @click="setLayout('columns')">
           <div class="layout-top"></div>
-          <div class="layout-other">
+          <div class="layout-main">
             <div class="layout-menu"></div>
-            <div class="layout-main"></div>
           </div>
-          <IconCheckboxCircleFill v-if="layout === 'vertical'" />
+          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'columns'" />
         </div>
         <div class="mini-layout1" @click="setLayout('transverse')">
           <div class="layout-top"></div>
           <div class="layout-other">
-            <div class="layout-main"></div>
+            <div class="layout-main main-transverse"></div>
           </div>
-          <IconCheckboxCircleFill v-if="layout === 'transverse'" />
+          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'transverse'" />
         </div>
       </div>
     </div>
@@ -119,52 +118,5 @@
 </template>
 
 <style scoped lang="scss">
-  .theme-box {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 14px;
-  }
-  .mini-layout1 {
-    box-sizing: border-box;
-    width: 100px;
-    height: 70px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 6px;
-    border: 2px solid #d6a2e8;
-    border-radius: 4px;
-    margin-bottom: 20px;
-
-    .layout-top {
-      width: 100%;
-      height: 20%;
-      background: #d6a2e8;
-      border-radius: 2px;
-    }
-    .layout-other {
-      width: 100%;
-      height: 70%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .layout-menu {
-        width: 20%;
-        height: 100%;
-        background: #30336b;
-        border-radius: 2px;
-      }
-
-      .layout-main {
-        width: 70%;
-        height: 100%;
-        //background: aquamarine;
-        border-radius: 2px;
-        border: 1px dashed;
-      }
-    }
-  }
+  @import './index.scss';
 </style>

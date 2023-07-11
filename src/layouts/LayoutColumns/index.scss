@@ -64,6 +64,7 @@
         cursor: pointer;
         transition: all 0.3s ease;
         padding: 0 20px;
+        //min-width: 70px;
         &:hover {
           background-color: #292b35;
         }
@@ -87,5 +88,6 @@
         }
       }
     }
+
   }
 }
