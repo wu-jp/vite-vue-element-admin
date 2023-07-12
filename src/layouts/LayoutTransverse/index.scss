@@ -8,7 +8,9 @@
     justify-content: space-between;
     height: 55px;
     padding: 0 15px 0 0;
-    background-color: #191a20;
+    //background-color: #191a20;
+    //border-bottom: 1px solid var(--el-border-color-light);
+    background-color: var(--el-bg-color);
     border-bottom: 1px solid var(--el-border-color-light);
     .logo {
       width: 210px;
@@ -34,6 +36,9 @@
         width: 65px;
         height: 55px;
       }
+      .el-menu-item.is-active {
+        color: #ffffff !important;
+      }
       .is-active {
         background-color: var(--el-color-primary) !important;
         border-bottom-color: var(--el-color-primary) !important;
@@ -41,6 +46,7 @@
           width: 0;
         }
         .el-sub-menu__title {
+          color: #ffffff !important;
           background-color: var(--el-color-primary) !important;
           border-bottom-color: var(--el-color-primary) !important;
         }

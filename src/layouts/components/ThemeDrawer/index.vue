@@ -55,36 +55,47 @@
           justify-content: space-around;
         "
       >
-        <div class="mini-layout1" @click="setLayout('classic')">
-          <div class="layout-top"></div>
-          <div class="layout-other">
-            <div class="layout-menu"></div>
-            <div class="layout-main"></div>
-          </div>
-          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'classic'" />
-        </div>
-        <div class="mini-layout1 layout-vertical" @click="setLayout('vertical')">
-          <div class="layout-menu"></div>
-          <div class="layout-other">
+        <el-tooltip class="box-item" content="classic" placement="top">
+          <div class="mini-layout1" @click="setLayout('classic')">
             <div class="layout-top"></div>
-            <div class="layout-main"></div>
+            <div class="layout-other">
+              <div class="layout-menu"></div>
+              <div class="layout-main"></div>
+            </div>
+            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'classic'" />
           </div>
-          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'vertical'" />
-        </div>
-        <div class="mini-layout1 layout-columns" @click="setLayout('columns')">
-          <div class="layout-top"></div>
-          <div class="layout-main">
+        </el-tooltip>
+
+        <el-tooltip class="box-item" content="vertical" placement="top">
+          <div class="mini-layout1 layout-vertical" @click="setLayout('vertical')">
             <div class="layout-menu"></div>
+            <div class="layout-other">
+              <div class="layout-top"></div>
+              <div class="layout-main"></div>
+            </div>
+            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'vertical'" />
           </div>
-          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'columns'" />
-        </div>
-        <div class="mini-layout1" @click="setLayout('transverse')">
-          <div class="layout-top"></div>
-          <div class="layout-other">
-            <div class="layout-main main-transverse"></div>
+        </el-tooltip>
+
+        <el-tooltip class="box-item" content="columns" placement="top">
+          <div class="mini-layout1 layout-columns" @click="setLayout('columns')">
+            <div class="layout-top"></div>
+            <div class="layout-main">
+              <div class="layout-menu"></div>
+            </div>
+            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'columns'" />
           </div>
-          <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'transverse'" />
-        </div>
+        </el-tooltip>
+
+        <el-tooltip class="box-item" content="transverse" placement="top">
+          <div class="mini-layout1" @click="setLayout('transverse')">
+            <div class="layout-top"></div>
+            <div class="layout-other">
+              <div class="layout-main main-transverse"></div>
+            </div>
+            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'transverse'" />
+          </div>
+        </el-tooltip>
       </div>
     </div>
 

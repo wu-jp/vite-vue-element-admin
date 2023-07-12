@@ -41,7 +41,9 @@
     justify-content: space-between;
     height: 55px;
     padding: 0 15px 0 0;
-    background-color: #ffffff;
+    //background-color: #ffffff;
+    //border-bottom: 1px solid var(--el-border-color-light);
+    background-color: var(--el-bg-color);
     border-bottom: 1px solid var(--el-border-color-light);
     :deep(.tool-bar-ri) {
       .toolBar-icon,
@@ -64,9 +66,10 @@
         cursor: pointer;
         transition: all 0.3s ease;
         padding: 0 20px;
+
         //min-width: 70px;
         &:hover {
-          background-color: #292b35;
+          background-color: var(--el-menu-hover-bg-color);
         }
         .el-icon {
           font-size: 21px;
@@ -77,7 +80,8 @@
         }
         .el-icon,
         .title {
-          color: #e5eaf3;
+          //color: #e5eaf3;
+          color: var(--el-menu-text-color);
         }
       }
       .split-active {

@@ -8,8 +8,10 @@
     justify-content: space-between;
     height: 55px;
     padding: 0 15px 0 0;
-    background-color: #191a20;
-    border-bottom: 1px solid #414243;
+    //background-color: #191a20;
+    //border-bottom: 1px solid #414243;
+    background-color: var(--el-bg-color);
+    border-bottom: 1px solid var(--el-border-color-light);
     .header-lf {
       display: flex;
       align-items: center;
