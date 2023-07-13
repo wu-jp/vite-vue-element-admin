@@ -2,8 +2,8 @@
   <el-container class="layout">
     <el-header>
       <Logo />
-      <Collapse style="margin: 0 15px 0 0" />
-      <div class="split-list">
+
+      <!--      <div class="split-list">
         <div
           v-for="item in menu"
           :key="item.path"
@@ -16,6 +16,41 @@
         >
           <span class="title"> {{ item.meta.title }}</span>
         </div>
+      </div>-->
+
+      <div style="flex: 1; display: flex; align-items: center">
+        <Collapse style="margin: 0 15px 0 0" />
+        <el-menu
+          style="height: 55px; flex: 1"
+          mode="horizontal"
+          :default-active="activeMenu"
+          :router="false"
+          :unique-opened="true"
+        >
+          <template v-for="subItem in menu" :key="subItem.path">
+            <el-sub-menu
+              v-if="subItem.children?.length"
+              :key="subItem.path"
+              :index="subItem.path + 'el-sub-menu'"
+            >
+              <template #title>
+                <span>{{ subItem.meta.title }}</span>
+              </template>
+              <MenuTree :menus="subItem.children" />
+            </el-sub-menu>
+
+            <el-menu-item
+              v-else
+              :key="subItem.path + 'el-sub-item'"
+              :index="subItem.path"
+              @click="handleClickMenu(subItem)"
+            >
+              <template #title>
+                <span>{{ subItem.meta.title }}</span>
+              </template>
+            </el-menu-item>
+          </template>
+        </el-menu>
       </div>
 
       <ToolBarRight />
