@@ -11,7 +11,10 @@
     </el-header>
     <el-container class="classic-content">
       <el-aside>
-        <div class="aside-box" :style="{ width: isCollapse ? '260px' : '64px' }">
+        <div
+          class="aside-box"
+          :style="{ width: isCollapse ? '260px' : '64px' }"
+        >
           <el-scrollbar>
             <el-menu
               :default-active="activeMenu"
@@ -38,6 +41,7 @@
   import { useAuthStore } from '@/store/modules/auth';
   import { useConfigStore } from '@/store/modules/config';
   import Logo from '../components/Logo/index.vue';
+
   import ToolBarLeft from '../components/Header/ToolBarLeft.vue';
   import ToolBarRight from '../components/Header/ToolBarRight.vue';
   import Main from '../components/Main/index.vue';

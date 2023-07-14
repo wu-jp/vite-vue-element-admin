@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import * as path from 'path';
 import Icons from 'unplugin-icons/vite'
+import setting from "./setting";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,12 +22,12 @@ export default defineConfig({
     },
     proxy: {
       '/admin': {
-        target: 'https://yy-test.youyi800.com/admin',
+        target: `${setting.host}/admin`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/admin/, ''),
       },
       '/common': {
-        target: 'https://yy-test.youyi800.com/common',
+        target: `${setting.host}/common`,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/common/, ''),
       },

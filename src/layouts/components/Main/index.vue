@@ -1,10 +1,18 @@
 <template>
+  <Tabs v-if="tabs" />
   <el-main>
     <router-view v-slot="{ Component, route }">
-      <transition appear name="fade-transform" mode="out-in">
+      <transition
+        appear
+        name="fade-transform"
+        mode="out-in"
+      >
         <keep-alive>
           <div>
-            <component :is="Component" :key="route.fullPath" />
+            <component
+              :is="Component"
+              :key="route.fullPath"
+            />
           </div>
         </keep-alive>
       </transition>
@@ -12,7 +20,13 @@
   </el-main>
 </template>
 
-<script setup></script>
+<script setup>
+import Tabs from '../Tabs/index.vue'
+import {useConfigStore} from "@/store/modules/config";
+import {computed} from "vue";
+const configStore = useConfigStore()
+const tabs = computed(() => configStore.tabs)
+</script>
 
 <style scoped lang="scss">
   .el-main {

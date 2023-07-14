@@ -10,6 +10,8 @@ export const useConfigStore = defineStore('config', {
     language: 'zh',
     assemblySize: 'default',
     layout: 'vertical', // classic 经典  columns 默认  vertical 垂直  transverse 横向
+    tabsIcon: true, // 标签页图标
+    tabs: true, // 标签页
   }),
   getters: {},
   actions: {
