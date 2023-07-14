@@ -6,11 +6,22 @@
       <ChangeTheme />
       <Fullscreen />
     </div>
-    <el-dropdown ref="dropdown" trigger="contextmenu">
-      <el-avatar :size="40" :src="circleUrl" @click="showClick" />
+    <el-dropdown
+      ref="dropdown"
+      trigger="contextmenu"
+    >
+      <el-avatar
+        :size="40"
+        :src="circleUrl"
+        @click="showClick"
+      />
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item divided @click="logout"> 退出登录 </el-dropdown-item>
+          <el-dropdown-item
+            @click="logout"
+          >
+            退出登录
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>

@@ -8,7 +8,7 @@
 
   const { switchDark, changePrimary, setAsideTheme } = useTheme();
   const configStore = useConfigStore();
-  const { primary, layout } = storeToRefs(configStore);
+  const { primary, layout, tabs, breadcrumb } = storeToRefs(configStore);
 
   const drawerVisible = ref(false);
   const handleClose = () => {
@@ -55,45 +55,85 @@
           justify-content: space-around;
         "
       >
-        <el-tooltip class="box-item" content="classic" placement="top">
-          <div class="mini-layout1" @click="setLayout('classic')">
-            <div class="layout-top"></div>
+        <el-tooltip
+          class="box-item"
+          content="classic"
+          placement="top"
+        >
+          <div
+            class="mini-layout1"
+            @click="setLayout('classic')"
+          >
+            <div class="layout-top" />
             <div class="layout-other">
-              <div class="layout-menu"></div>
-              <div class="layout-main"></div>
+              <div class="layout-menu" />
+              <div class="layout-main" />
             </div>
-            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'classic'" />
+            <IconCheckboxCircleFill
+              v-if="layout === 'classic'"
+              class="checkbox-icon"
+            />
           </div>
         </el-tooltip>
 
-        <el-tooltip class="box-item" content="vertical" placement="top">
-          <div class="mini-layout1 layout-vertical" @click="setLayout('vertical')">
-            <div class="layout-menu"></div>
+        <el-tooltip
+          class="box-item"
+          content="vertical"
+          placement="top"
+        >
+          <div
+            class="mini-layout1 layout-vertical"
+            @click="setLayout('vertical')"
+          >
+            <div class="layout-menu" />
             <div class="layout-other">
-              <div class="layout-top"></div>
-              <div class="layout-main"></div>
+              <div class="layout-top" />
+              <div class="layout-main" />
             </div>
-            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'vertical'" />
+            <IconCheckboxCircleFill
+              v-if="layout === 'vertical'"
+              class="checkbox-icon"
+            />
           </div>
         </el-tooltip>
 
-        <el-tooltip class="box-item" content="columns" placement="top">
-          <div class="mini-layout1 layout-columns" @click="setLayout('columns')">
-            <div class="layout-top"></div>
+        <el-tooltip
+          class="box-item"
+          content="columns"
+          placement="top"
+        >
+          <div
+            class="mini-layout1 layout-columns"
+            @click="setLayout('columns')"
+          >
+            <div class="layout-top" />
             <div class="layout-main">
-              <div class="layout-menu"></div>
+              <div class="layout-menu" />
             </div>
-            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'columns'" />
+            <IconCheckboxCircleFill
+              v-if="layout === 'columns'"
+              class="checkbox-icon"
+            />
           </div>
         </el-tooltip>
 
-        <el-tooltip class="box-item" content="transverse" placement="top">
-          <div class="mini-layout1" @click="setLayout('transverse')">
-            <div class="layout-top"></div>
+        <el-tooltip
+          class="box-item"
+          content="transverse"
+          placement="top"
+        >
+          <div
+            class="mini-layout1"
+            @click="setLayout('transverse')"
+          >
+            <div class="layout-top" />
             <div class="layout-other">
-              <div class="layout-main main-transverse"></div>
+              <div class="layout-main main-transverse" />
             </div>
-            <IconCheckboxCircleFill class="checkbox-icon" v-if="layout === 'transverse'" />
+            <IconCheckboxCircleFill
+              v-if="layout === 'transverse'"
+              class="checkbox-icon"
+            />
           </div>
         </el-tooltip>
       </div>
@@ -104,12 +144,19 @@
 
       <div class="theme-box">
         <span>暗黑模式</span>
-        <el-switch v-model="configStore.isDark" @change="switchDark" />
+        <el-switch
+          v-model="configStore.isDark"
+          @change="switchDark"
+        />
       </div>
       <!-- 主题色 -->
       <div class="theme-box">
         <span>主题颜色</span>
-        <el-color-picker v-model="primary" :predefine="predefineColors" @change="changePrimary" />
+        <el-color-picker
+          v-model="primary"
+          :predefine="predefineColors"
+          @change="changePrimary"
+        />
       </div>
     </div>
 
@@ -118,11 +165,11 @@
 
       <div class="theme-box">
         <span>面包屑</span>
-        <el-switch v-model="configStore.isDark" />
+        <el-switch v-model="configStore.breadcrumb" />
       </div>
       <div class="theme-box">
         <span>标签栏</span>
-        <el-switch v-model="configStore.isDark" />
+        <el-switch v-model="configStore.tabs" />
       </div>
     </div>
   </el-drawer>

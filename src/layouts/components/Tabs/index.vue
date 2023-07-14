@@ -36,12 +36,14 @@
   import { useTabsStore } from '@/store/modules/tabs';
   import {useAuthStore} from "@/store/modules/auth";
   import {useConfigStore} from "@/store/modules/config";
+  import {useKeepAliveStore} from "@/store/modules/keepAlive";
 
   const route = useRoute();
   const router = useRouter();
   const tabStore = useTabsStore();
   const authStore = useAuthStore()
   const configStore = useConfigStore()
+  const keepAliveStore = useKeepAliveStore()
 
   const tabsMenuValue = ref(route.fullPath);
   const tabsMenuList = computed(() => tabStore.tabsMenuList);
@@ -66,7 +68,11 @@
       };
 
       tabStore.addTabs(tabsParams);
+      route.meta.isKeepAlive && keepAliveStore.addKeepAliveName(route.name);
     },
+      {
+        immediate: true
+      }
   );
 
   const tabsDrop = () => {
@@ -103,6 +109,7 @@
   };
   const tabRemove = (fullPath) => {
     const name = tabStore.tabsMenuList.filter(item => item.path == fullPath)[0].name || ''
+    keepAliveStore.removeKeepAliveName(name);
     tabStore.removeTabs(fullPath, fullPath == route.fullPath)
   };
 </script>

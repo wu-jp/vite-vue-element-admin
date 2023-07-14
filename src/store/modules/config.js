@@ -12,6 +12,8 @@ export const useConfigStore = defineStore('config', {
     layout: 'vertical', // classic 经典  columns 默认  vertical 垂直  transverse 横向
     tabsIcon: true, // 标签页图标
     tabs: true, // 标签页
+    breadcrumb: true, // 面包屑
+    breadcrumbIcon: true, // 面包屑图标
   }),
   getters: {},
   actions: {
