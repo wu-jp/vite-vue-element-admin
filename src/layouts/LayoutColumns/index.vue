@@ -2,32 +2,18 @@
   <el-container class="layout">
     <el-header>
       <Logo />
-
-      <!--      <div class="split-list">
-        <div
-          v-for="item in menu"
-          :key="item.path"
-          class="split-item"
-          @click="changeSubMenu(item)"
-          :class="{
-            'split-active':
-              splitActive === item.path || `/${splitActive.split('/')[1]}` === item.path,
-          }"
-        >
-          <span class="title"> {{ item.meta.title }}</span>
-        </div>
-      </div>-->
-
-      <div style="flex: 1; display: flex; align-items: center">
+      <el-container class="header-ri">
         <Collapse style="margin: 0 15px 0 0" />
         <el-menu
-          style="height: 55px; flex: 1"
           mode="horizontal"
           :default-active="activeMenu"
           :router="false"
           :unique-opened="true"
         >
-          <template v-for="subItem in menu" :key="subItem.path">
+          <template
+            v-for="subItem in menu"
+            :key="subItem.path"
+          >
             <el-sub-menu
               v-if="subItem.children?.length"
               :key="subItem.path"
@@ -51,9 +37,8 @@
             </el-menu-item>
           </template>
         </el-menu>
-      </div>
-
-      <ToolBarRight />
+        <ToolBarRight />
+      </el-container>
     </el-header>
 
     <el-container>
@@ -73,14 +58,16 @@
           </el-menu>
         </el-scrollbar>
       </el-aside>
-      <Main />
+      <el-container class="columns-main">
+        <Main />
+      </el-container>
     </el-container>
   </el-container>
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue';
-  import { useRouter, useRoute } from 'vue-router';
+import {computed, onMounted, reactive, ref} from 'vue';
+  import {useRouter, useRoute, onBeforeRouteUpdate} from 'vue-router';
   import { useAuthStore } from '@/store/modules/auth';
   import { useConfigStore } from '@/store/modules/config';
   import Collapse from '@/layouts/components/Header/components/Collapse.vue';
@@ -89,6 +76,7 @@
   import ToolBarLeft from '../components/Header/ToolBarLeft.vue';
   import Main from '../components/Main/index.vue';
   import MenuTree from '../components/menus/menuTree.vue';
+  import {currentRouteTopActivity} from "@/layouts/LayoutColumns/helper";
 
   const router = useRouter();
   const route = useRoute();
@@ -101,13 +89,28 @@
   const activeMenu = computed(() => (route.meta?.activeMenu ? route.meta.activeMenu : route.path));
 
   const subMenuList = ref([]);
-  const splitActive = ref('');
-  const changeSubMenu = (item) => {
-    splitActive.value = item.path;
-    if (item.children?.length) return (subMenuList.value = item.children);
-    subMenuList.value = [];
-    router.push(item.path);
-  };
+
+  const currentRouteActive = (currentRoute) => {
+    let routeChildren = currentRouteTopActivity(currentRoute.path, menu.value)
+    if(routeChildren) {
+      if(routeChildren.children && routeChildren.children.length > 0) {
+        subMenuList.value = routeChildren.children
+      }else {
+        subMenuList.value = [routeChildren]
+      }
+    }else if(!subMenuList.value) {
+      subMenuList.value = menu.value
+    }
+  }
+
+  onMounted(() => {
+    currentRouteActive(route)
+  })
+
+  onBeforeRouteUpdate((to) => {
+    console.log(to)
+    currentRouteActive(to)
+  })
 </script>
 
 <style scoped lang="scss">

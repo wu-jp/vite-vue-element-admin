@@ -1,7 +1,18 @@
 <template>
-  <div class="logo-container" :style="{ width: !isCollapse ? '64px' : '260px' }">
-    <img class="logo-img" src="/party_2.ico" alt="" />
-    <span v-show="isCollapse" class="logo-text" :style="logoStyle">WuYi Admin</span>
+  <div
+    class="logo-container"
+    :style="{ width: !isCollapse ? '64px' : '260px' }"
+  >
+    <img
+      class="logo-img"
+      src="/party_2.ico"
+      alt=""
+    >
+    <span
+      v-show="isCollapse"
+      class="logo-text"
+      :style="logoStyle"
+    >WuYi Admin</span>
   </div>
 </template>
 
@@ -22,6 +33,7 @@
   .logo-container {
     height: 55px;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
