@@ -671,7 +671,7 @@
         {
           "path": "/system/userManagement",
           "name": "userManagement",
-          "component": "system/userManagement/Index",
+          "component": "/system/userManagement/Index",
           "meta": {
             "icon": "Menu",
             "title": "账号管理",
@@ -685,7 +685,7 @@
         {
           "path": "/system/roleManagement",
           "name": "roleManagement",
-          "component": "system/roleManagement/Index",
+          "component": "/system/roleManagement/Index",
           "meta": {
             "icon": "Menu",
             "title": "角色管理",
@@ -699,7 +699,7 @@
         {
           "path": "/system/menuManagement",
           "name": "menuManagement",
-          "component": "system/menuManagement/Index",
+          "component": "/system/menuManagement/Index",
           "meta": {
             "icon": "Menu",
             "title": "菜单管理",
@@ -715,7 +715,7 @@
     {
       "path": "/about/index",
       "name": "about",
-      "component": "/about/index",
+      "component": "//about/index",
       "meta": {
         "icon": "InfoFilled",
         "title": "关于项目",

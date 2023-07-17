@@ -44,6 +44,7 @@
 
   const isCollapse = computed(() => configStore.isCollapse);
   const menu = computed(() => authStore.showMenuListGet);
+  console.log('menu', menu);
   // menu 默认选中的路由，如果是详情页面则会使用 meta.activeMenu 否则使用 route.path
   const activeMenu = computed(() => (route.meta?.activeMenu ? route.meta.activeMenu : route.path));
 

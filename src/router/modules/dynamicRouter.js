@@ -18,7 +18,7 @@ export const initDynamicRouter = async () => {
   permissionStore.flatMenuListGet.forEach((item) => {
     item.children && delete item.children;
     if (item.component && typeof item.component === 'string') {
-      item.component = modules['/src/views/' + item.component + '.vue'];
+      item.component = modules['/src/views' + item.component + '.vue'];
     }
     router.addRoute('layout', item);
   });
