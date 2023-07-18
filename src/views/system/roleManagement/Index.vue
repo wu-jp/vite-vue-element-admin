@@ -10,10 +10,9 @@
         <el-button text bg type="danger" @click="handleDelete(row)"> 删除 </el-button>
       </template>
     </ProTable>
+    <AddRuleDialog ref="addRuleRef" @updater="proTableRef.getTableList()" />
+    <AuthDialog ref="authRef" @updater="proTableRef.getTableList()" />
   </div>
-
-  <AddRuleDialog ref="addRuleRef" @updater="proTableRef.getTableList()" />
-  <AuthDialog ref="authRef" @updater="proTableRef.getTableList()" />
 </template>
 
 <script setup>

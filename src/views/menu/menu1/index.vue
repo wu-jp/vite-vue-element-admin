@@ -1,5 +1,5 @@
 <template>
-  <div> menu1 </div>
+  <div class="card content-box"> menu1 </div>
 </template>
 
 <script setup></script>

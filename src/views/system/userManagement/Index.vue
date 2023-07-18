@@ -1,24 +1,26 @@
 <template>
-  <ProTable
-    ref="proTableRef"
-    :request-api="getTableList"
-    :columns="columns"
-    title="管理员列表"
-    :pagination="true"
-  >
-    <template #tableHeader="{ row }">
-      <el-button type="primary" @click="addAdminDialogRef.showDialog()"> 添 加 </el-button>
-    </template>
-    <template #operation="{ row }">
-      <el-button v-if="row.is_system !== 1" text bg type="primary" @click="handleEdit(row)">
-        编辑
-      </el-button>
-      <el-button v-if="row.is_system !== 1" text bg type="danger" @click="handleDelete(row)">
-        删除
-      </el-button>
-    </template>
-  </ProTable>
-  <AddAdminDialog ref="addAdminDialogRef" @updater="proTableRef.getTableList()" />
+  <div>
+    <ProTable
+      ref="proTableRef"
+      :request-api="getTableList"
+      :columns="columns"
+      title="管理员列表"
+      :pagination="true"
+    >
+      <template #tableHeader="{ row }">
+        <el-button type="primary" @click="addAdminDialogRef.showDialog()"> 添 加 </el-button>
+      </template>
+      <template #operation="{ row }">
+        <el-button v-if="row.is_system !== 1" text bg type="primary" @click="handleEdit(row)">
+          编辑
+        </el-button>
+        <el-button v-if="row.is_system !== 1" text bg type="danger" @click="handleDelete(row)">
+          删除
+        </el-button>
+      </template>
+    </ProTable>
+    <AddAdminDialog ref="addAdminDialogRef" @updater="proTableRef.getTableList()" />
+  </div>
 </template>
 
 <script setup lang="jsx">

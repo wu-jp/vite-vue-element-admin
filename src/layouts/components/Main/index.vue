@@ -2,18 +2,9 @@
   <Tabs v-if="tabs" />
   <el-main>
     <router-view v-slot="{ Component, route }">
-      <transition
-        appear
-        name="fade-transform"
-        mode="out-in"
-      >
+      <transition appear name="fade-transform" mode="out-in">
         <keep-alive>
-          <div>
-            <component
-              :is="Component"
-              :key="route.fullPath"
-            />
-          </div>
+          <component :is="Component" v-if="isRouterShow" :key="route.fullPath" />
         </keep-alive>
       </transition>
     </router-view>
@@ -21,11 +12,13 @@
 </template>
 
 <script setup>
-import Tabs from '../Tabs/index.vue'
-import {useConfigStore} from "@/store/modules/config";
-import {computed} from "vue";
-const configStore = useConfigStore()
-const tabs = computed(() => configStore.tabs)
+  import Tabs from '../Tabs/index.vue';
+  import { useConfigStore } from '@/store/modules/config';
+  import { computed, ref } from 'vue';
+  const configStore = useConfigStore();
+  const tabs = computed(() => configStore.tabs);
+
+  const isRouterShow = ref(true);
 </script>
 
 <style scoped lang="scss">
