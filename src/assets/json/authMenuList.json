@@ -451,34 +451,6 @@
           }
         },
         {
-          "path": "/directives/watermarkDirect",
-          "name": "watermarkDirect",
-          "component": "/directives/watermarkDirect/index",
-          "meta": {
-            "icon": "Menu",
-            "title": "水印指令",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false,
-            "isKeepAlive": true
-          }
-        },
-        {
-          "path": "/directives/dragDirect",
-          "name": "dragDirect",
-          "component": "/directives/dragDirect/index",
-          "meta": {
-            "icon": "Menu",
-            "title": "拖拽指令",
-            "isLink": "",
-            "isHide": false,
-            "isFull": false,
-            "isAffix": false,
-            "isKeepAlive": true
-          }
-        },
-        {
           "path": "/directives/debounceDirect",
           "name": "debounceDirect",
           "component": "/directives/debounceDirect/index",
