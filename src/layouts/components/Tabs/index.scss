@@ -1,6 +1,49 @@
 .tabs-box {
-  background-color: var(--el-bg-color);
+  //background-color: var(--el-bg-color);
+  background-color: var(--el-bg-color-page);
+  padding: 10px 12px 0;
+
+  display: flex;align-items: center;
+  .tabs-box-op {
+    background-color: var(--el-bg-color);
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    border-radius: 4px;
+    .icon-item {
+      width: 35px;
+      height: 30px;
+      line-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+      font-size: 14px;
+      position: relative;
+
+
+      &:after {
+        content: '';
+        width: 1px;
+        height: 10px;
+        background-color: #eee;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+
+      }
+
+      &:last-of-type:after {
+        width: 0;
+      }
+    }
+  }
+
   .tabs-menu {
+    background-color: var(--el-bg-color);
     position: relative;
     width: 100%;
     .el-dropdown {
@@ -16,7 +59,8 @@
         margin: 0;
         .el-tabs__nav-wrap {
           position: absolute;
-          width: calc(100% - 110px);
+          //width: calc(100% - 110px);
+          width: calc(100% - 20px);
           .el-tabs__nav {
             display: flex;
             border: none;

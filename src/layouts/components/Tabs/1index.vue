@@ -122,5 +122,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import 'index';
+  @import '1index';
 </style>
